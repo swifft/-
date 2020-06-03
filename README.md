@@ -7,21 +7,14 @@
 软件架构说明
 
 
-#### 安装教程
-
- npm install
-
-
 #### 使用说明
 
-npm run serve
+采用vue.js的前端框架nuiapp开发，克隆后Hbuilder编译即可
 
 #### 参与贡献
 
 1.  Fork 本仓库
-2.  新建 Developer 分支
-3.  提交代码
-4.  新建 Pull Request
+2.  提交代码
 
 
 #### 码云特技
