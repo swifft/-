@@ -1,0 +1,71 @@
+.top {
+  height: 200px;
+}
+.top .bg {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.top .bg image {
+  height: 100%;
+  width: 100%;
+}
+.top .bg .mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.top .bg .mask .avatar {
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 5px;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  border: 1px solid #eeeeee;
+  background-color: #eeeeee;
+  -webkit-box-shadow: 0px 10px 10px -3px #eeeeee;
+          box-shadow: 0px 10px 10px -3px #eeeeee;
+}
+.top .bg .mask .avatar image {
+  width: 100%;
+  height: 100%;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+}
+.top .bg .mask .avatar .login {
+  height: 20px;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  font-size: 16px;
+  font-weight: 500;
+  color: #91beff;
+  text-align: center;
+}
+.top .bg .mask .edit {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+}
+.top .bg .mask .edit image {
+  width: 100%;
+  height: 100%;
+}
+.setting {
+  padding: 15px 0;
+  background-color: #eeeeee;
+}
+
