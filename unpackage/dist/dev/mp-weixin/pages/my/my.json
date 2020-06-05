@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "我的",
-  "navigationBarBackgroundColor": "white",
+  "navigationBarBackgroundColor": "#eeeeee",
   "navigationBarTextStyle": "black",
   "usingComponents": {
     "uni-list": "/components/uni-list/uni-list",

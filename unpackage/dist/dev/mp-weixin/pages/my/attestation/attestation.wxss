@@ -1,0 +1,128 @@
+.box {
+  background-color: #eeeeee;
+}
+.form-box {
+  background-color: #ffffff;
+  padding: 10px 30px;
+}
+.form-box .name {
+  position: relative;
+}
+.form-box .name .check-success {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+}
+.form-box .name .check-success image {
+  width: 100%;
+  height: 100%;
+}
+.form-box .name .check-fail {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+}
+.form-box .name .check-fail image {
+  width: 100%;
+  height: 100%;
+}
+.form-box .name input {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  font-size: 18px;
+  margin: 15px 0;
+}
+.form-box .schoolnumber {
+  position: relative;
+}
+.form-box .schoolnumber .check-success {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+}
+.form-box .schoolnumber .check-success image {
+  width: 100%;
+  height: 100%;
+}
+.form-box .schoolnumber .check-fail {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+}
+.form-box .schoolnumber .check-fail image {
+  width: 100%;
+  height: 100%;
+}
+.form-box .schoolnumber input {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  font-size: 18px;
+  margin: 15px 0;
+}
+.form-box .upload {
+  padding: 20px 0;
+}
+.form-box .upload .title {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 5px;
+}
+.form-box .upload .main {
+  width: 100px;
+  height: 100px;
+  margin: 10px 0;
+}
+.form-box .upload .main .bg {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.form-box .upload .main .bg image {
+  width: 100%;
+  height: 100%;
+}
+.form-box .upload .main .bg .delete {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 20px;
+  height: 20px;
+}
+.form-box .upload .main .bg .delete image {
+  width: 100%;
+  height: 100%;
+}
+.form-box .upload .main .bg .icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+}
+.form-box .upload .main .bg .icon image {
+  width: 100%;
+  height: 100%;
+}
+.btn {
+  width: 80%;
+  height: 50px;
+  margin: 20px auto;
+  text-align: center;
+  border-radius: 20px;
+  background-color: #ffffff;
+  line-height: 50px;
+  box-shadow: 0 5px 10px 5px #cccccc;
+  font-size: 18px;
+}
+

@@ -94,10 +94,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uniList: function() {
-    return __webpack_require__.e(/*! import() | components/uni-list/uni-list */ "components/uni-list/uni-list").then(__webpack_require__.bind(null, /*! @/components/uni-list/uni-list.vue */ 82))
+    return __webpack_require__.e(/*! import() | components/uni-list/uni-list */ "components/uni-list/uni-list").then(__webpack_require__.bind(null, /*! @/components/uni-list/uni-list.vue */ 90))
   },
   uniListItem: function() {
-    return __webpack_require__.e(/*! import() | components/uni-list-item/uni-list-item */ "components/uni-list-item/uni-list-item").then(__webpack_require__.bind(null, /*! @/components/uni-list-item/uni-list-item.vue */ 89))
+    return __webpack_require__.e(/*! import() | components/uni-list-item/uni-list-item */ "components/uni-list-item/uni-list-item").then(__webpack_require__.bind(null, /*! @/components/uni-list-item/uni-list-item.vue */ 97))
   }
 }
 var render = function() {
@@ -107,19 +107,25 @@ var render = function() {
   var a0 = {
     color: "#D4237A",
     size: "22",
-    type: "person"
+    type: "person-filled"
   }
   var a1 = {
     color: "#D4237A",
     size: "22",
-    type: "info"
+    type: "personadd-filled"
+  }
+  var a2 = {
+    color: "#D4237A",
+    size: "22",
+    type: "info-filled"
   }
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
         a0: a0,
-        a1: a1
+        a1: a1,
+        a2: a2
       }
     }
   )
@@ -157,6 +163,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
 //
 //
 //
@@ -264,6 +271,12 @@ var _default =
     login: function login() {
       uni.redirectTo({
         url: '../login/login' });
+
+    },
+    goattestation: function goattestation() {
+      //身份认证
+      uni.redirectTo({
+        url: 'attestation/attestation' });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

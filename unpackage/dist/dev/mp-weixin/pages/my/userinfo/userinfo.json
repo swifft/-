@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "个人信息",
-  "navigationBarBackgroundColor": "white",
+  "navigationBarBackgroundColor": "#eeeeee",
   "navigationBarTextStyle": "black",
   "usingComponents": {
     "uni-list": "/components/uni-list/uni-list",

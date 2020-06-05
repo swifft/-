@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "注册",
-  "navigationBarBackgroundColor": "white",
+  "navigationBarBackgroundColor": "#eeeeee",
   "navigationBarTextStyle": "black",
   "usingComponents": {
     "uni-popup": "/components/uni-popup/uni-popup"

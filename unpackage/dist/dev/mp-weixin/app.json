@@ -7,7 +7,8 @@
     "pages/my/userinfo/userinfo",
     "pages/my/edit/edit",
     "pages/login/login",
-    "pages/register/register"
+    "pages/register/register",
+    "pages/my/attestation/attestation"
   ],
   "subPackages": [],
   "window": {
@@ -42,5 +43,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap81.json"
 }

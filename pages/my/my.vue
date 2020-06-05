@@ -20,8 +20,9 @@
 		</view>
 		<view class="setting" :style="{height:phoneHeight + 'px'}">
 			<uni-list>
-				<uni-list-item title="个人信息" showExtraIcon="true" :extra-icon="{color: '#D4237A',size: '22',type: 'person'}" @tap="gouserinfo"></uni-list-item>
-				<uni-list-item title="关于我们" showExtraIcon="true" :extra-icon="{color: '#D4237A',size: '22',type: 'info'}" @tap="goabout"></uni-list-item>
+				<uni-list-item title="个人信息" showExtraIcon="true" :extra-icon="{color: '#D4237A',size: '22',type: 'person-filled'}" @tap="gouserinfo"></uni-list-item>
+				<uni-list-item title="身份认证" showExtraIcon="true" :extra-icon="{color: '#D4237A',size: '22',type: 'personadd-filled'}" @tap="goattestation"></uni-list-item>
+				<uni-list-item title="关于我们" showExtraIcon="true" :extra-icon="{color: '#D4237A',size: '22',type: 'info-filled'}" @tap="goabout"></uni-list-item>
 			</uni-list>
 		</view>
 	</view>
@@ -107,6 +108,12 @@
 				uni.redirectTo({
 					url:'../login/login'
 				}) 
+			},
+			goattestation(){
+				//身份认证
+				uni.redirectTo({
+					url:'attestation/attestation'
+				})
 			}
 		}
 	}
