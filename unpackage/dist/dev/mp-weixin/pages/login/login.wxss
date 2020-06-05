@@ -125,8 +125,7 @@
 }
 .form .btn-box {
   height: 70rpx;
-  -webkit-border-radius: 18rpx;
-          border-radius: 18rpx;
+  border-radius: 18rpx;
   margin: 60rpx 0;
   background-color: #5799ff;
 }

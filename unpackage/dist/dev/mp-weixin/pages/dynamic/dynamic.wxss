@@ -4,10 +4,8 @@
   margin: 40rpx auto;
   background: #ffffff;
   padding: 20rpx 50rpx;
-  -webkit-border-radius: 40rpx;
-          border-radius: 40rpx;
-  -webkit-box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.3);
-          box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 40rpx;
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.3);
 }
 .list-box .list-box-title {
   width: 100%;
@@ -19,14 +17,12 @@
 .list-box .list-box-title .left .avatar {
   width: 100rpx;
   height: 100rpx;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
 }
 .list-box .list-box-title .left .avatar image {
   width: 100%;
   height: 100%;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
 }
 .list-box .list-box-title .right {
   display: -webkit-box;

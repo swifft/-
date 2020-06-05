@@ -6,8 +6,7 @@
 }
 .userinfo .bg {
   background-color: #ffffff;
-  -webkit-border-radius: 20px 20px 0 0;
-          border-radius: 20px 20px 0 0;
+  border-radius: 20px 20px 0 0;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -31,8 +30,7 @@
 .userinfo .bg-1 {
   height: 100px;
   background-color: #ffffff;
-  -webkit-border-radius: 20px;
-          border-radius: 20px;
+  border-radius: 20px;
   padding: 20px;
   display: -webkit-box;
   display: -webkit-flex;
