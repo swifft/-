@@ -236,6 +236,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 {
   components: {
     MxDatePicker: MxDatePicker },
@@ -244,7 +255,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       swiperheight: 500,
       tabIndex: 0,
-      show: true,
+      show: 4,
       showPicker: false,
       showDate: false,
       date: '',

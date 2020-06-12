@@ -11,84 +11,95 @@
 			<swiper class="swiper-box" style="background: #f2f2f2;" :style="{'height':swiperheight + 'px'}" :current="tabIndex"
 			 @change="tabChange">
 				<swiper-item>
-					<view class="one">
-						<view class="title">
-							请 假 条
-						</view>
-						<view class="main">
-							<view class="top">
-								<view>尊敬的</view>
-								<view>
-									<input type="text" />
-								</view>
-								<view>老师</view>
+					<template v-if="show == 1">
+						<view class="one">
+							<view class="title">
+								请 假 条
 							</view>
-							<view class="center">
-								<view class="center_1">
-									<view>您好!我是计信学院</view>
+							<view class="main">
+								<view class="top">
+									<view>尊敬的</view>
 									<view>
 										<input type="text" />
 									</view>
-									<view>级</view>
-									<view>
-										<input type="text" />
-									</view>
-									<view>专业学生</view>
-									<view>
-										<input type="text" />
-									</view>
-									<view>，学号为</view>
-									<view>
-										<input type="text" />
-									</view>
-									<view>，因</view>
-									<view>
-										<input type="text" class="center_2" />
-									</view>
-									<view>原因需请假，时间为</view>
-									<view v-if="rangetime.length == 0" style="margin: 0 5px;"><button type="default" size="mini" @tap="chooseDate(1)">选择</button></view>
-									<view v-else @tap="chooseDate(1)">{{rangetime[0]}} 至 {{rangetime[1]}}</view>
-									<view>，去向地址为</view>
-									<view>
-										<input type="text" class="center_3" />
-									</view>
-									<view class="center_4">本人承诺请假期间安全责任自负，恳请批准!</view>
+									<view>老师</view>
 								</view>
-								<view class="center_5">
-									<view>
-										<view>本人联系方式: </view>
+								<view class="center">
+									<view class="center_1">
+										<view>您好!我是计信学院</view>
+										<view>
+											<input type="text" />
+										</view>
+										<view>级</view>
+										<view>
+											<input type="text" />
+										</view>
+										<view>专业学生</view>
+										<view>
+											<input type="text" />
+										</view>
+										<view>，学号为</view>
+										<view>
+											<input type="text" />
+										</view>
+										<view>，因</view>
+										<view>
+											<input type="text" class="center_2" />
+										</view>
+										<view>原因需请假，时间为</view>
+										<view v-if="rangetime.length == 0" style="margin: 0 5px;"><button type="default" size="mini" @tap="chooseDate(1)">选择</button></view>
+										<view v-else @tap="chooseDate(1)">{{rangetime[0]}} 至 {{rangetime[1]}}</view>
+										<view>，去向地址为</view>
+										<view>
+											<input type="text" class="center_3" />
+										</view>
+										<view class="center_4">本人承诺请假期间安全责任自负，恳请批准!</view>
+									</view>
+									<view class="center_5">
+										<view>
+											<view>本人联系方式: </view>
+											<view>
+												<input type="text" />
+											</view>
+										</view>
+										<view>
+											<view>去向联系方式: </view>
+											<view>
+												<input type="text" />
+											</view>
+										</view>
+									</view>
+									<view class="center_6">
+										<view>请假人: </view>
 										<view>
 											<input type="text" />
 										</view>
 									</view>
-									<view>
-										<view>去向联系方式: </view>
-										<view>
-											<input type="text" />
-										</view>
+									<view class="center_7">
+										<view v-if="date == ''" style="margin: 0 5px;"><button type="default" size="mini" @tap="chooseDate(2)">请假日期选择</button></view>
+										<view v-else @tap="chooseDate(2)">{{date}}</view>
 									</view>
+									<mx-date-picker :show="showPicker" type="rangetime" :begin-text="'离校'" :end-text="'返校'" @confirm="onSelected"
+									 @cancel="onSelected" />
+									<mx-date-picker :show="showDate" type="date" @confirm="dateSelected" @cancel="dateSelected" />
 								</view>
-								<view class="center_6">
-									<view>请假人: </view>
-									<view>
-										<input type="text" />
-									</view>
-								</view>
-								<view class="center_7">
-									<view v-if="date == ''" style="margin: 0 5px;"><button type="default" size="mini" @tap="chooseDate(2)">请假日期选择</button></view>
-									<view v-else @tap="chooseDate(2)">{{date}}</view>
-								</view>
-								<mx-date-picker :show="showPicker" type="rangetime" :begin-text="'离校'" :end-text="'返校'" @confirm="onSelected"
-								 @cancel="onSelected" />
-								<mx-date-picker :show="showDate" type="date" @confirm="dateSelected" @cancel="dateSelected" />
 							</view>
+							
 						</view>
 						
-					</view>
-					
-					<view class="footer">
-						<button type="default" size="mini">确认提交</button>
-					</view>
+						<view class="footer">
+							<button type="default" size="mini">确认提交</button>
+						</view>
+					</template>
+					<template v-if="show == 2">
+						老师端
+					</template>
+					<template v-if="show == 3">
+						辅导员端
+					</template>
+					<template v-if="show == 4">
+						教务处端
+					</template>
 				</swiper-item>
 				<swiper-item>你好</swiper-item>
 				<swiper-item>你好</swiper-item>
@@ -107,7 +118,7 @@
 			return {
 				swiperheight: 500,
 				tabIndex: 0,
-				show: true,
+				show: 4,
 				showPicker: false,
 				showDate: false,
 				date: '',
