@@ -135,32 +135,120 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var MxDatePicker = function MxDatePicker() {__webpack_require__.e(/*! require.ensure | components/mx-datepicker/mx-datepicker */ "components/mx-datepicker/mx-datepicker").then((function () {return resolve(__webpack_require__(/*! ../../components/mx-datepicker/mx-datepicker.vue */ 153));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
+  components: {
+    MxDatePicker: MxDatePicker },
+
   data: function data() {
     return {
       swiperheight: 500,
-      tabIndex: 0 };
+      tabIndex: 0,
+      show: true,
+      showPicker: false,
+      showDate: false,
+      date: '',
+      rangetime: [] };
 
   },
   onLoad: function onLoad() {var _this = this;
@@ -177,6 +265,30 @@ var _default =
     },
     tabChange: function tabChange(e) {
       this.tabIndex = e.detail.current;
+    },
+    chooseDate: function chooseDate(index) {//显示
+      switch (index) {
+        case 1:
+          this.showPicker = true;
+          break;
+        case 2:
+          this.showDate = true;
+          break;
+        default:
+          break;}
+
+    },
+    onSelected: function onSelected(e) {//选择
+      this.showPicker = false;
+      if (e) {
+        this.rangetime = e.value;
+      }
+    },
+    dateSelected: function dateSelected(e) {
+      this.showDate = false;
+      if (e) {
+        this.date = e.value;
+      }
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

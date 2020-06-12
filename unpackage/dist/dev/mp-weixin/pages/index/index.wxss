@@ -2,4 +2,113 @@
   width: 100rpx;
   margin: 0 70rpx;
 }
+.one {
+  padding: 10px;
+  background-color: #ffffff;
+}
+.one .title {
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: '楷体';
+}
+.one .main .top {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  font-size: 18px;
+  margin: 5px 0;
+}
+.one .main .top input {
+  width: 100px;
+  padding: 0 5px;
+  border-bottom: 1px solid black;
+}
+.one .main .center {
+  font-size: 18px;
+  margin: 5px 0;
+}
+.one .main .center .center_1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+.one .main .center .center_1 input {
+  width: 80px;
+  padding: 0 5px;
+  border-bottom: 1px solid black;
+}
+.one .main .center .center_1 view:nth-child(1) {
+  text-indent: 2em;
+}
+.one .main .center .center_1 .center_2 {
+  width: 200px;
+  padding: 0 5px;
+  border-bottom: 1px solid black;
+}
+.one .main .center .center_1 .center_3 {
+  width: 200px;
+  padding: 0 5px;
+  border-bottom: 1px solid black;
+}
+.one .main .center .center_1 .center_4 {
+  font-weight: bolder;
+}
+.one .main .center .center_5 {
+  padding: 10px;
+}
+.one .main .center .center_5 input {
+  margin-left: 10px;
+  width: 80px;
+  padding: 0 5px;
+  border-bottom: 1px solid black;
+}
+.one .main .center .center_5 view:nth-child(1) {
+  margin: 5px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.one .main .center .center_5 view:nth-child(2) {
+  margin: 5px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.one .main .center .center_6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+  padding: 10px;
+}
+.one .main .center .center_6 input {
+  margin-left: 10px;
+  width: 80px;
+  padding: 0 5px;
+  border-bottom: 1px solid black;
+}
+.one .main .center .center_7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+}
+.footer {
+  margin-top: 30px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
 

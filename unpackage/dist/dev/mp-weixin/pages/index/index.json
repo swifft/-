@@ -2,5 +2,7 @@
   "navigationBarTitleText": "主页",
   "navigationBarBackgroundColor": "#eeeeee",
   "navigationBarTextStyle": "black",
-  "usingComponents": {}
+  "usingComponents": {
+    "mx-date-picker": "/components/mx-datepicker/mx-datepicker"
+  }
 }
