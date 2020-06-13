@@ -1,0 +1,1 @@
+<view style="{{'height:'+(phoneHeight+'px')+';'}}"><block wx:if="{{info==0}}"><view class="bg"><image src="../../../static/my/DefaultPage.jpg"></image></view></block><block wx:else><view>1</view></block></view>

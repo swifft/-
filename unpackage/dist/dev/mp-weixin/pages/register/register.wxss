@@ -104,6 +104,18 @@
   height: 100%;
   width: 100%;
 }
+.form .role {
+  margin-top: 30rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.form .role .role-1 {
+  color: rgba(255, 255, 255, 0.8);
+}
+.form .role .role-2 {
+  color: rgba(244, 244, 244, 0.8);
+}
 .form .radio {
   margin-top: 30rpx;
   display: -webkit-box;
@@ -115,7 +127,7 @@
 }
 .form .radio .radio-text {
   font-size: 24rpx;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(87, 153, 255, 0.8);
 }
 .form .radio .popup_title {
   text-align: center;

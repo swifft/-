@@ -2,14 +2,17 @@
 	<view>
 		<view class="top">
 			<view class="bg">
-				<image :src="userinfo.avatar" mode="aspectFit" v-if="userinfo.avatar"></image>
+				<image :src="userinfo[0].avatar" mode="aspectFit" v-if="userinfo.length > 0"></image>
 				<image src="http://gxnudsl.xyz/images/default.png" mode="aspectFit" v-else></image>
 				<view class="mask"> 
 					<view class="avatar">
-						<image :src="userinfo.avatar" mode="aspectFit" v-if="userinfo.avatar"></image>
+						<image :src="userinfo[0].avatar" mode="aspectFit" v-if="userinfo.length > 0"></image>
 						<image src="http://gxnudsl.xyz/images/default.png" mode="aspectFit" v-else></image>
-						<view class="login" :class="{'isshow':isshow,'ishidden':!isshow}" @tap="login">
+						<view class="login" @tap="login" v-if="userinfo.length == 0">
 							登录/注册
+						</view>
+						<view class="login" v-else>
+							{{userinfo[0].name}}
 						</view>
 					</view>
 					<view class="edit" @tap="edit">
@@ -23,6 +26,8 @@
 				<uni-list-item title="个人信息" showExtraIcon="true" :extra-icon="{color: '#D4237A',size: '22',type: 'person-filled'}" @tap="gouserinfo"></uni-list-item>
 				<uni-list-item title="身份认证" showExtraIcon="true" :extra-icon="{color: '#D4237A',size: '22',type: 'personadd-filled'}" @tap="goattestation"></uni-list-item>
 				<uni-list-item title="关于我们" showExtraIcon="true" :extra-icon="{color: '#D4237A',size: '22',type: 'info-filled'}" @tap="goabout"></uni-list-item>
+				<uni-list-item title="待审核" showExtraIcon="true" :extra-icon="{color: '#D4237A',size: '22',type: 'circle-filled'}" @tap="gowaitchecked"></uni-list-item>
+				<uni-list-item title="已审核" showExtraIcon="true" :extra-icon="{color: '#D4237A',size: '22',type: 'checkbox-filled'}" @tap="gochecked"></uni-list-item>
 			</uni-list>
 		</view>
 	</view>
@@ -32,26 +37,38 @@
 	export default {
 		data() {
 			return { 
-				userinfo:{},
+				userinfo:[],
 				phoneHeight:0,
 				isshow:null
 			};
 		},
 		onReady() {
-			this.getHeight() 
-			this.isshowlogin() 
+			this.getHeight()
 		},
-		onLoad() { 
+		onLoad() {
+			uni.startPullDownRefresh();
+		},
+		mounted() { 
 			this.getData()
 		},
-		onShow() {
-			this.rload()
+		onPullDownRefresh() {
+			setTimeout(() =>{
+				this.getData();
+				uni.stopPullDownRefresh();
+			}, 1000);	
+			setTimeout(() =>{
+				uni.showToast({
+				    title: '已更新至最新数据啦',
+					icon:'none',
+				    duration: 2000
+				});
+			}, 1100);
 		},
 		methods:{
 			getHeight(){
 				uni.getSystemInfo({
 				    success:  (res) =>{
-						this.phoneHeight = res.windowHeight - 250
+						this.phoneHeight = res.windowHeight - 230
 				    }
 				});
 			},
@@ -59,27 +76,20 @@
 				uni.getStorage({
 				    key: 'userInfo',
 				    success: (res) =>{
-				      this.userinfo = res.data
-				    }
+				      this.userinfo.push(res.data)
+				    },
+					fail: (err) => {
+						this.userinfo = []
+					}
 				});
 			},
-			rload(){
-			},
-			isshowlogin(){
-				console.log(this.userinfo)
-				if(JSON.stringify(this.userinfo) == "{}"){
-					this.isshow = false
-				}else{
-					this.isshow = true 
-				}
-			}, 
 			goabout(){
 				uni.navigateTo({
 					url:'about/about'
 				})
 			},
 			gouserinfo(){
-				if(JSON.stringify(this.userinfo) != "{}"){
+				if(this.userinfo.length > 0){
 					uni.navigateTo({
 						url:'userinfo/userinfo'
 					})
@@ -92,7 +102,7 @@
 				}
 			},
 			edit(){
-				if(JSON.stringify(this.userinfo) != "{}"){
+				if(this.userinfo.length > 0){
 					uni.navigateTo({
 						url:'edit/edit'
 					})
@@ -105,7 +115,7 @@
 				}
 			},
 			login(){
-				uni.redirectTo({
+				uni.navigateTo({
 					url:'../login/login'
 				}) 
 			},
@@ -113,6 +123,16 @@
 				//身份认证
 				uni.redirectTo({
 					url:'attestation/attestation'
+				})
+			},
+			gowaitchecked(){
+				uni.navigateTo({
+					url:'WaitChecked/WaitChecked'
+				})
+			},
+			gochecked(){
+				uni.navigateTo({
+					url:'Checked/Checked'
 				})
 			}
 		}

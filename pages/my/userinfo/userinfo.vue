@@ -50,8 +50,10 @@
 					duration:1000
 				})
 				setTimeout(()=>{
-					uni.switchTab({
-						url:'../my'
+					let page = getCurrentPages()
+					let prevPage = page[page.length - 2]
+					prevPage.$vm.getData()
+					uni.navigateBack({
 					})
 				},1000)
 			}

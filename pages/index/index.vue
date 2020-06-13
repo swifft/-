@@ -101,7 +101,9 @@
 						教务处端
 					</template>
 				</swiper-item>
-				<swiper-item>你好</swiper-item>
+				<swiper-item>
+					
+				</swiper-item>
 				<swiper-item>你好</swiper-item>
 			</swiper>
 		</view>
@@ -118,7 +120,7 @@
 			return {
 				swiperheight: 500,
 				tabIndex: 0,
-				show: 4,
+				show: 1,
 				showPicker: false,
 				showDate: false,
 				date: '',

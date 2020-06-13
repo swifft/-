@@ -28,6 +28,14 @@
 						<view class="fail" v-show="ispasswordfail"><image src="../../static/public/fail.png" mode=""></image></view>
 					</view>
 				</view>
+				<view class="role">
+					<view class="role-1">
+						请选择你的身份：
+					</view>
+					<picker mode="selector" :range="roleType" @change="selectRole">
+						<view class="role-2">{{roleType[roleIndex]}}</view>
+					</picker>
+				</view>
 				<view class="radio">
 					<radio :checked="radio" style="transform:scale(0.5)" @tap="ischeked" />
 					<view class="radio-text" @tap="clause">我同意已阅读条款</view>
@@ -73,8 +81,10 @@ export default {
 				name: '',
 				email: '',
 				password: '',
-				avatar:'http://gxnudsl.xyz/images/default.png'
-			}
+				avatar:'http://gxnudsl.xyz/images/123.jpg'
+			},
+			roleType:['学生','老师','辅导员','教务处'],
+			roleIndex:0
 		};
 	},
 	methods: {
@@ -131,6 +141,10 @@ export default {
 			}
 			this.userinfo.name = e.detail.value;
 		},
+		// 身份选择
+		selectRole(e){
+			this.roleIndex = e.detail.value
+		},
 		register() {
 			if (this.userinfo.name.length > 0 && this.userinfo.password.length > 0 && this.userinfo.email.length > 0) {
 				if (this.isemailfail) {
@@ -171,8 +185,11 @@ export default {
 											duration:1000
 										})
 										setTimeout(()=>{
-											uni.switchTab({
-												url:'../my/my'
+											let page = getCurrentPages()
+											let prevPage = page[page.length - 3]
+											prevPage.$vm.getData()
+											uni.navigateBack({
+												delta: 2
 											})
 										},1000)
 									}
@@ -273,6 +290,17 @@ export default {
 			}
 		}
 	}
+	
+	.role{
+		margin-top: 30rpx;
+		display: flex;
+		.role-1{
+			color: rgba(255, 255, 255, 0.8);
+		}
+		.role-2{
+			color: rgba(244, 244, 244, 0.8);
+		}
+	}
 
 	.radio {
 		margin-top: 30rpx;
@@ -281,7 +309,7 @@ export default {
 
 		.radio-text {
 			font-size: 24rpx;
-			color: rgba(255, 255, 255, 0.7);
+			color: rgba(87, 153, 255, 0.8);
 		}
 
 		.popup_title {

@@ -4,72 +4,81 @@
 		"style": {
 			"navigationBarTitleText": "主页",
 			"navigationBarBackgroundColor": "#eeeeee",
-			"navigationBarTextStyle":"black"
+			"navigationBarTextStyle": "black"
 		}
 	}, {
 		"path": "pages/dynamic/dynamic",
 		"style": {
 			"navigationBarTitleText": "动态",
 			"navigationBarBackgroundColor": "#eeeeee",
-			"navigationBarTextStyle":"black",
-			"enablePullDownRefresh":true
+			"navigationBarTextStyle": "black",
+			"enablePullDownRefresh": true
 		}
 	}, {
 		"path": "pages/my/my",
 		"style": {
 			"navigationBarTitleText": "我的",
 			"navigationBarBackgroundColor": "#eeeeee",
-			"navigationBarTextStyle":"black"
+			"navigationBarTextStyle": "black",
+			"enablePullDownRefresh": true
 		}
-	}    ,{
-            "path" : "pages/my/about/about",
-            "style" : {
-				"navigationBarTitleText": "关于我们",
-				"navigationBarBackgroundColor": "#eeeeee",
-				"navigationBarTextStyle":"black"
-			}
-        }
-        ,{
-            "path" : "pages/my/userinfo/userinfo",
-            "style" : {
-				"navigationBarTitleText": "个人信息",
-				"navigationBarBackgroundColor": "#eeeeee",
-				"navigationBarTextStyle":"black"
-			}
-        }
-        ,{
-            "path" : "pages/my/edit/edit",
-            "style" : {
-				"navigationBarTitleText": "编辑",
-				"navigationBarBackgroundColor": "#eeeeee",
-				"navigationBarTextStyle":"black"
-			}
-        }
-		,{
-		    "path" : "pages/login/login",
-		    "style" : {
-				"navigationBarTitleText": "登录",
-				"navigationBarBackgroundColor": "#eeeeee",
-				"navigationBarTextStyle":"black"
-			}
+	}, {
+		"path": "pages/my/about/about",
+		"style": {
+			"navigationBarTitleText": "关于我们",
+			"navigationBarBackgroundColor": "#eeeeee",
+			"navigationBarTextStyle": "black"
 		}
-		,{
-		    "path" : "pages/register/register",
-		    "style" : {
-				"navigationBarTitleText": "注册",
-				"navigationBarBackgroundColor": "#eeeeee",
-				"navigationBarTextStyle":"black"
-			}
+	}, {
+		"path": "pages/my/userinfo/userinfo",
+		"style": {
+			"navigationBarTitleText": "个人信息",
+			"navigationBarBackgroundColor": "#eeeeee",
+			"navigationBarTextStyle": "black"
 		}
-		,{
-		    "path" : "pages/my/attestation/attestation",
-		    "style" : {
-				"navigationBarTitleText": "身份认证",
-				"navigationBarBackgroundColor": "#eeeeee",
-				"navigationBarTextStyle":"black"
-			}
+	}, {
+		"path": "pages/my/edit/edit",
+		"style": {
+			"navigationBarTitleText": "编辑",
+			"navigationBarBackgroundColor": "#eeeeee",
+			"navigationBarTextStyle": "black"
 		}
-    ],
+	}, {
+		"path": "pages/login/login",
+		"style": {
+			"navigationBarTitleText": "登录",
+			"navigationBarBackgroundColor": "#eeeeee",
+			"navigationBarTextStyle": "black"
+		}
+	}, {
+		"path": "pages/register/register",
+		"style": {
+			"navigationBarTitleText": "注册",
+			"navigationBarBackgroundColor": "#eeeeee",
+			"navigationBarTextStyle": "black"
+		}
+	}, {
+		"path": "pages/my/attestation/attestation",
+		"style": {
+			"navigationBarTitleText": "身份认证",
+			"navigationBarBackgroundColor": "#eeeeee",
+			"navigationBarTextStyle": "black"
+		}
+	}, {
+		"path": "pages/my/WaitChecked/WaitChecked",
+		"style": {
+			"navigationBarTitleText": "待审核",
+			"navigationBarBackgroundColor": "#eeeeee",
+			"navigationBarTextStyle": "black"
+		}
+	}, {
+		"path": "pages/my/Checked/Checked",
+		"style": {
+			"navigationBarTitleText": "已审核",
+			"navigationBarBackgroundColor": "#eeeeee",
+			"navigationBarTextStyle": "black"
+		}
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "uni-app",

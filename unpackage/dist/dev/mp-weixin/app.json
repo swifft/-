@@ -8,7 +8,9 @@
     "pages/my/edit/edit",
     "pages/login/login",
     "pages/register/register",
-    "pages/my/attestation/attestation"
+    "pages/my/attestation/attestation",
+    "pages/my/WaitChecked/WaitChecked",
+    "pages/my/Checked/Checked"
   ],
   "subPackages": [],
   "window": {
@@ -43,5 +45,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap59.json"
 }
