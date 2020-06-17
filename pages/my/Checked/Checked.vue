@@ -6,8 +6,25 @@
 			</view>
 		</template>
 		<template v-else>
-			<view>
-				1
+			<view class="box">
+				<view class="title">
+					请假条
+				</view>
+				<uni-list>
+					<uni-list-item title="请假条" rightText="05/06 10:00"></uni-list-item>
+					<uni-list-item title="请假条" rightText="05/06 10:00"></uni-list-item>
+					<uni-list-item title="请假条" rightText="05/06 10:00"></uni-list-item>
+					<uni-list-item title="请假条" rightText="05/06 10:00"></uni-list-item>
+				</uni-list>
+				<view class="title">
+					教师申请
+				</view>
+				<uni-list>
+					<uni-list-item title="教师申请" rightText="05/06 10:00"></uni-list-item>
+					<uni-list-item title="教师申请" rightText="05/06 10:00"></uni-list-item>
+					<uni-list-item title="教师申请" rightText="05/06 10:00"></uni-list-item>
+					<uni-list-item title="教师申请" rightText="05/06 10:00"></uni-list-item>
+				</uni-list>
 			</view>
 		</template>
 	</view>
@@ -18,7 +35,7 @@
 		data() {
 			return {
 				phoneHeight:0,
-				info:0
+				info:1
 			};
 		},
 		onReady() {
@@ -43,6 +60,19 @@
 	image{
 		height: 100%;
 		width: 100%;
+	}
+}
+.box{
+	width: 80%;
+	padding-top: 10px;
+	margin: 0 auto;
+	.title{
+		font-size: 20px;
+		font-family: "楷体";
+		font-weight: bold;
+		margin: 10px 0;
+		display: flex;
+		justify-content: center;
 	}
 }
 </style>

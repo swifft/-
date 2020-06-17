@@ -2,5 +2,8 @@
   "navigationBarTitleText": "已审核",
   "navigationBarBackgroundColor": "#eeeeee",
   "navigationBarTextStyle": "black",
-  "usingComponents": {}
+  "usingComponents": {
+    "uni-list": "/components/uni-list/uni-list",
+    "uni-list-item": "/components/uni-list-item/uni-list-item"
+  }
 }
