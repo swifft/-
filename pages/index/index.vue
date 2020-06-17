@@ -4,7 +4,6 @@
 			<scroll-view class="uni-swiper-tab" scroll-x>
 				<view class="swiper-tab-list" :class="{'active':tabIndex==0}" @tap="tabtap(0)">请假</view>
 				<view class="swiper-tab-list" :class="{'active':tabIndex==1}" @tap="tabtap(1)">教室</view>
-				<view class="swiper-tab-list" :class="{'active':tabIndex==2}" @tap="tabtap(2)">活动</view>
 			</scroll-view>
 		</view>
 		<view class="uni-tab-bar">
@@ -84,9 +83,7 @@
 									<mx-date-picker :show="showDate" type="date" @confirm="dateSelected" @cancel="dateSelected" />
 								</view>
 							</view>
-							
 						</view>
-						
 						<view class="footer">
 							<button type="default" size="mini">确认提交</button>
 						</view>
@@ -102,9 +99,73 @@
 					</template>
 				</swiper-item>
 				<swiper-item>
-					
+					<view class="classMoudel">
+						<view class="classList">
+							<view class="title">
+								性别:
+							</view>
+							<view class="input">
+								<input type="text"/>
+							</view>
+						</view>
+						<view class="classList">
+							<view class="title">
+								学号:
+							</view>
+							<view class="input">
+								<input type="text"/>
+							</view>
+						</view>
+						<view class="classList">
+							<view class="title">
+								电话:
+							</view>
+							<view class="input">
+								<input type="text"/>
+							</view>
+						</view>
+						<view class="classList">
+							<view class="title">
+								用途:
+							</view>
+							<view class="input">
+								<input type="text"/>
+							</view>
+						</view>
+						<view class="classList">
+							<view class="title">
+								是否使用多媒体:
+							</view>
+							<view class="radio">
+								<radio :checked="radio" @tap="isRadioCheked" />
+							</view>
+						</view>
+						<view class="lookup">
+							<view class="chooseClass">
+								<view class="chooseClass-1">
+									<uni-combox label="教室:" :candidates="candidates" placeholder="请选择教室区域" v-model="classposition"></uni-combox>
+								</view>
+								<view class="chooseClass-2">
+									<uni-combox label="节数:" :candidates="candidates_1" placeholder="请选择使用时间" v-model="classtime"></uni-combox>
+								</view>
+							</view>
+							<view class="lookupBtn" @tap="lookup">
+								查询
+							</view>
+						</view>
+						<view class="classResult" v-if="isclassResult == true">
+							<view class="classResult_0">
+								为你查询到以下结果：
+							</view>
+							<scroll-view scroll-y="true" class="classResult-1"> 
+								<view v-for="(item, index) in classData" :key="index"><text>{{item}}</text></view>
+							</scroll-view>
+						</view>
+					</view>
+					<view class="footer">
+						<button type="default" size="mini">确认提交</button>
+					</view>
 				</swiper-item>
-				<swiper-item>你好</swiper-item>
 			</swiper>
 		</view>
 	</view>
@@ -125,6 +186,13 @@
 				showDate: false,
 				date: '',
 				rangetime: [],
+				radio:false,
+				candidates:['理科楼'],
+				classposition:'',
+				candidates_1:['一节','二节','三节','四节','五节','上午加下午','上午加晚上','下午加晚上','一天'],
+				classtime:'',
+				classData:['理1-202','理1-201','理1-302','理1-401','理1-207','理1-405',],
+				isclassResult:false
 			}
 		},
 		onLoad() {
@@ -165,6 +233,13 @@
 				if (e) {
 					this.date = e.value
 				}
+			},
+			isRadioCheked(){
+				this.radio = !this.radio
+				console.log(this.radio)
+			},
+			lookup(){
+				this.isclassResult = true
 			}
 		}
 	}
@@ -172,8 +247,12 @@
 
 <style lang="less">
 	.swiper-tab-list {
-		width: 100rpx;
+		width: 250rpx;
 		margin: 0 70rpx;
+	}
+	
+	.uni-combox__selector{
+		z-index: 999!important;
 	}
 
 	.one {
@@ -280,8 +359,99 @@
 	}
 	
 	.footer{
-		margin-top: 30px;
+		margin-top: 20px;
 		display: flex;
 		justify-content: center;
+	}
+	
+	.classMoudel{
+		background-color: #ffffff;
+		.classList{
+			padding-top: 30rpx;
+			display: flex;
+			justify-content: center;
+			.title{
+				padding-right: 30rpx;
+			}
+			.input{
+				input{
+					padding:  5rpx 10rpx;
+					border: 1px dashed rgba(0, 0, 0, 0.6);
+				}
+			}
+			.radio{
+				radio{
+					padding-left: 100rpx;
+				}
+			}
+		}
+		.lookup{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			.chooseClass{
+				width: 55%;
+				.chooseClass-1{			
+					padding: 5px 0;
+					text:nth-child(1){
+						color: black;
+					}
+				}
+				.chooseClass-2{
+					padding: 5px 0;
+					text:nth-child(1){
+						color: black;
+					}
+				}
+			}
+			.lookupBtn{
+				height: 70px;
+				width: 40px;
+				line-height: 70px;
+				margin-left: 10px;
+				font-size: 16px;
+				text-align: center;
+				color: rgb(22, 75, 129);
+				border-radius: 15px;
+				background-color: rgba(238, 238, 238, 0.1);
+				border: 1px solid #eeeeee;
+				box-shadow: 0 0 3px 3px rgba(238, 238, 238, 0.6);
+			}
+			.lookupBtn:active{
+				background-color: #EEEEEE;
+			}
+		}
+		
+		.classResult{
+			height: 200px;
+			margin: 10px 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			align-items: center;
+			.classResult_0{
+				font-size: 16px;
+				color: rgb(245, 108, 108);
+			}
+			.classResult-1{
+				width: 60%;
+				margin: 0 auto;
+				border: 1px solid #eeeeee;
+				border-radius: 5px;
+				max-height: 160px;
+				box-sizing: border-box;
+				view{
+					margin: 5px 0;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					border-bottom: 1px solid #eeeeee;
+				}
+				view:last-child{
+					border-bottom: none;
+				}
+			}
+		}
 	}
 </style>

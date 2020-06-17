@@ -3,6 +3,7 @@
   "navigationBarBackgroundColor": "#eeeeee",
   "navigationBarTextStyle": "black",
   "usingComponents": {
+    "uni-combox": "/components/uni-combox/uni-combox",
     "mx-date-picker": "/components/mx-datepicker/mx-datepicker"
   }
 }
