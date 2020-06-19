@@ -80,8 +80,7 @@ export default {
 			userinfo: {
 				name: '',
 				email: '',
-				password: '',
-				avatar:'http://gxnudsl.xyz/images/123.jpg'
+				password: ''
 			},
 			roleType:['学生','老师','辅导员','教务处'],
 			roleIndex:0
@@ -175,23 +174,31 @@ export default {
 									icon: 'none'
 								});
 							} else {
-								uni.setStorage({
-									key:'userInfo',
+								this.userinfo['role'] = this.roleType[this.roleIndex],
+								uni.request({
 									data:this.userinfo,
-									success: () => {
-										uni.showToast({
-											title:'注册成功,正在为您跳转...',
-											icon:'none',
-											duration:1000
+									method:'POST',
+									url:'https://gxnudsl.xyz/api/user/register',
+									success: (res) => {
+										uni.setStorage({
+											key:'userInfo',
+											data:res.data.res_info,
+											success: () => {
+												uni.showToast({
+													title:'注册成功,正在为您跳转...',
+													icon:'none',
+													duration:1000
+												})
+												setTimeout(()=>{
+													let page = getCurrentPages()
+													let prevPage = page[page.length - 3]
+													prevPage.$vm.getData()
+													uni.navigateBack({
+														delta: 2
+													})
+												},1000)
+											}
 										})
-										setTimeout(()=>{
-											let page = getCurrentPages()
-											let prevPage = page[page.length - 3]
-											prevPage.$vm.getData()
-											uni.navigateBack({
-												delta: 2
-											})
-										},1000)
 									}
 								})
 							}

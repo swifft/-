@@ -16,7 +16,7 @@
 						</view>
 					</view>
 					<view class="edit" @tap="edit">
-						<image src="../../static/my/edit.png"></image>
+						更改头像
 					</view>
 				</view>
 			</view>
@@ -77,6 +77,7 @@
 				    key: 'userInfo',
 				    success: (res) =>{
 				      this.userinfo.push(res.data)
+					  console.log(res)
 				    },
 					fail: (err) => {
 						this.userinfo = []
@@ -202,11 +203,6 @@
 					top: 10px;
 					right: 10px;
 					padding: 5px;
-					image{
-						width: 100%;
-						height: 100%;
-						
-					}
 				}
 			}	
 		}

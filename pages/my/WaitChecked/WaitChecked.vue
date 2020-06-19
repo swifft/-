@@ -17,13 +17,13 @@
 					<uni-list-item title="请假条" rightText="05/06 10:00" :showArrow="false"></uni-list-item>
 				</uni-list>
 				<view class="title">
-					教师申请
+					教室申请
 				</view>
 				<uni-list>
-					<uni-list-item title="教师申请" rightText="05/06 10:00" :showArrow="false"></uni-list-item>
-					<uni-list-item title="教师申请" rightText="05/06 10:00" :showArrow="false"></uni-list-item>
-					<uni-list-item title="教师申请" rightText="05/06 10:00" :showArrow="false"></uni-list-item>
-					<uni-list-item title="教师申请" rightText="05/06 10:00" :showArrow="false"></uni-list-item>
+					<uni-list-item title="教室申请" rightText="05/06 10:00" :showArrow="false"></uni-list-item>
+					<uni-list-item title="教室申请" rightText="05/06 10:00" :showArrow="false"></uni-list-item>
+					<uni-list-item title="教室申请" rightText="05/06 10:00" :showArrow="false"></uni-list-item>
+					<uni-list-item title="教室申请" rightText="05/06 10:00" :showArrow="false"></uni-list-item>
 				</uni-list>
 			</view>
 		</template>

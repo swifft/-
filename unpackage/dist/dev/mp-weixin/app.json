@@ -1,11 +1,10 @@
 {
   "pages": [
+    "pages/my/my",
     "pages/index/index",
     "pages/dynamic/dynamic",
-    "pages/my/my",
     "pages/my/about/about",
     "pages/my/userinfo/userinfo",
-    "pages/my/edit/edit",
     "pages/login/login",
     "pages/register/register",
     "pages/my/attestation/attestation",
@@ -45,5 +44,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap13.json"
 }
