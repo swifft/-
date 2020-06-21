@@ -185,7 +185,7 @@ export default {
 											data:res.data.res_info,
 											success: () => {
 												uni.showToast({
-													title:'注册成功,正在为您跳转...',
+													title:'欢迎您加入我们,正在为您跳转身份认证...',
 													icon:'none',
 													duration:1000
 												})
@@ -193,8 +193,8 @@ export default {
 													let page = getCurrentPages()
 													let prevPage = page[page.length - 3]
 													prevPage.$vm.getData()
-													uni.navigateBack({
-														delta: 2
+													uni.redirectTo({
+														url:'../my/attestation/attestation'
 													})
 												},1000)
 											}

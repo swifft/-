@@ -2,15 +2,21 @@
 	<view :style="{height:phoneHeight + 'px'}" class="userinfo">
 		<view class="list">
 			<uni-list>
-				<uni-list-item title="头像" :showArrow="false">
+				<uni-list-item title="头像">
 					<template v-slot:right="">
-						<image style="width: 40px;height: 40px;" src="../../../static/test.jpg" mode="widthFix"></image>
+						<avatar 
+							selWidth="200px" selHeight="200px" @upload="myUpload" :avatarSrc="userinfo.avatar"
+							avatarStyle="width: 40px;height: 40px; border-radius: 100%;">
+						</avatar>
 					</template>
 				</uni-list-item>
-				<uni-list-item title="姓名" :showArrow="false" rightText="邓世林"></uni-list-item>
-				<uni-list-item title="性别" :showArrow="false" rightText="男"></uni-list-item>
-				<uni-list-item title="学号" :showArrow="false" rightText="201712300166"></uni-list-item>
-				<uni-list-item title="学院" :showArrow="false" rightText="计算机科学与信息工程学院/软件学院"></uni-list-item>
+				<uni-list-item title="姓名" :showArrow="false" :rightText="userinfo.name"></uni-list-item>
+				<uni-list-item title="性别" :showArrow="false" :rightText="userinfo.sex"></uni-list-item>
+				<uni-list-item title="学号" :showArrow="false" :rightText="userinfo.schoolnumber"></uni-list-item>
+				<uni-list-item title="学院" :showArrow="false" :rightText="userinfo.college"></uni-list-item>
+				<uni-list-item title="身份认证" :showArrow="false" v-if="userinfo.isattestation == 0" rightText="未认证"></uni-list-item>
+				<uni-list-item title="身份认证" :showArrow="false" v-else rightText="已认证"></uni-list-item> 
+				<uni-list-item title="当前身份" :showArrow="false" :rightText="userinfo.role"></uni-list-item>
 			</uni-list>
 		</view>
 		<view class="btn">
@@ -20,14 +26,22 @@
 </template>
 
 <script>
+	import avatar from "@/components/yq-avatar/yq-avatar.vue";
 	export default {
+		components: {
+			avatar
+		},
 		data() {
 			return {
-				phoneHeight:0
+				phoneHeight:0,
+				userinfo:{}
 			};
 		},
 		onLoad() {
 			this.getHeight()
+		},
+		mounted() {
+			this.getData()
 		},
 		methods:{
 			getHeight(){
@@ -41,6 +55,36 @@
 						// #endif	
 				    }
 				});
+			},
+			getData(){
+				uni.getStorage({
+				    key: 'userInfo',
+				    success: (res) =>{
+				      this.userinfo = res.data
+					  console.log(res)
+				    },
+					fail: (err) => {
+						this.userinfo = []
+					}
+				});
+			},
+			myUpload(res) {
+				this.userinfo.avatar = res.path;
+				this.userinfo['avatar'] = res.path;
+				uni.setStorage({
+					key:'userInfo',
+					data:this.userinfo,
+					success: () => {
+						uni.showToast({
+							title:'头像修改成功！',
+							icon:'none',
+							duration:1000
+						})
+						let page = getCurrentPages()
+						let prevPage = page[page.length - 2]
+						prevPage.$vm.getData()
+					},
+				})
 			},
 			exit(){
 				uni.clearStorage();

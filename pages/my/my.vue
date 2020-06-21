@@ -2,21 +2,16 @@
 	<view>
 		<view class="top">
 			<view class="bg">
-				<image :src="userinfo[0].avatar" mode="aspectFit" v-if="userinfo.length > 0"></image>
-				<image src="http://gxnudsl.xyz/images/default.png" mode="aspectFit" v-else></image>
+				<image :src="userinfo.avatar" v-if="userinfo.avatar"></image>
 				<view class="mask"> 
 					<view class="avatar">
-						<image :src="userinfo[0].avatar" mode="aspectFit" v-if="userinfo.length > 0"></image>
-						<image src="http://gxnudsl.xyz/images/default.png" mode="aspectFit" v-else></image>
-						<view class="login" @tap="login" v-if="userinfo.length == 0">
+						<image :src="userinfo.avatar" v-if="userinfo.avatar"></image>
+						<view class="login" @tap="login" v-if="Object.keys(userinfo) == 0">
 							登录/注册
 						</view>
 						<view class="login" v-else>
-							{{userinfo[0].name}}
+							{{userinfo.name}}
 						</view>
-					</view>
-					<view class="edit" @tap="edit">
-						更改头像
 					</view>
 				</view>
 			</view>
@@ -37,7 +32,7 @@
 	export default {
 		data() {
 			return { 
-				userinfo:[],
+				userinfo:{},
 				phoneHeight:0,
 				isshow:null
 			};
@@ -76,8 +71,8 @@
 				uni.getStorage({
 				    key: 'userInfo',
 				    success: (res) =>{
-				      this.userinfo.push(res.data)
-					  console.log(res)
+				      this.userinfo = res.data
+					  console.log(this.userinfo)
 				    },
 					fail: (err) => {
 						this.userinfo = []
@@ -90,22 +85,9 @@
 				})
 			},
 			gouserinfo(){
-				if(this.userinfo.length > 0){
+				if(this.userinfo){
 					uni.navigateTo({
 						url:'userinfo/userinfo'
-					})
-				}else{
-					uni.showToast({
-					    title: '您还没有登录,请先登录',
-						icon:'none',
-					    duration: 2000
-					});
-				}
-			},
-			edit(){
-				if(this.userinfo.length > 0){
-					uni.navigateTo({
-						url:'edit/edit'
 					})
 				}else{
 					uni.showToast({
@@ -172,11 +154,11 @@
 					left: 0;
 					right: 0;
 					margin: auto;
-					padding: 5px;
+					padding: 1px;
 					border-radius: 50%;
 					border: 1px solid #eeeeee;
 					background-color: #eeeeee;
-					box-shadow: 0px 10px 10px -3px #eeeeee;
+					box-shadow: 0 1px 6px 0 #eeeeee;
 					image{
 						width: 100%;
 						height: 100%;

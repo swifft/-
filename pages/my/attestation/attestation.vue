@@ -11,7 +11,7 @@
 				</view>
 			</view>
 			<view class="schoolnumber">
-				<input type="text" placeholder="教职工/学号" v-model="form.schoolnumber" @input="schoolnumber_check"/>
+				<input type="text" placeholder="教职工号/学号" v-model="form.schoolnumber" @input="schoolnumber_check"/>
 				<view class="check-success" v-show="schoolnumber_check_success">
 					<image src="../../../static/my/success.png"></image>
 				</view>

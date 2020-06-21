@@ -6,11 +6,11 @@
 			<view class="title"><view class="title-top">欢迎回来</view></view>
 			<view class="form">
 				<view class="public">
-					<view class="form-title">邮箱</view>
+					<view class="form-title">账号</view>
 					<view class="form-input">
-						<input type="text" placeholder="请输入邮箱" placeholder-style="color:rgba(244, 244, 244, 0.4)" @input="getemail" />
-						<view class="success" v-show="isemailsuccess"><image src="../../static/public/success.png" mode=""></image></view>
-						<view class="fail" v-show="isemailfail"><image src="../../static/public/fail.png" mode=""></image></view>
+						<input type="text" placeholder="请输入用户名/邮箱" placeholder-style="color:rgba(244, 244, 244, 0.4)" @input="getaccount" />
+						<view class="success" v-show="isaccountsuccess"><image src="../../static/public/success.png" mode=""></image></view>
+						<view class="fail" v-show="isaccountfail"><image src="../../static/public/fail.png" mode=""></image></view>
 					</view>
 				</view>
 				<view class="public">
@@ -28,17 +28,17 @@
 	</view>
 </template>
 
-<script> 
+<script>
 export default {
 	data() {
 		return {
 			phoneHeight: '',
-			isemailsuccess: false,
-			isemailfail: false,
+			isaccountsuccess: false,
+			isaccountfail: false,
 			ispasswordsuccess: false,
 			ispasswordfail: false,
 			userinfo: {
-				email: '',
+				account: '',
 				password: ''
 			}
 		};
@@ -61,16 +61,15 @@ export default {
 				url: '../register/register'
 			});
 		},
-		getemail(e) {
-			const str = new RegExp(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/);
-			if (str.test(e.detail.value)) {
-				this.isemailfail = false;
-				this.isemailsuccess = true;
+		getaccount(e) {
+			if (e.detail.value.length >= 3) {
+				this.isaccountfail = false;
+				this.isaccountsuccess = true;
 			} else {
-				this.isemailfail = true;
-				this.isemailsuccess = false;
+				this.isaccountfail = true;
+				this.isaccountsuccess = false;
 			}
-			this.userinfo.email = e.detail.value;
+			this.userinfo.account = e.detail.value;
 		},
 		getpassword(e) {
 			if (e.detail.value.length >= 3 && e.detail.value.length <= 16) {
@@ -83,26 +82,65 @@ export default {
 			this.userinfo.password = e.detail.value;
 		},
 		login() {
-			if (this.userinfo.password.length > 0 && this.userinfo.email.length > 0) {
-				if (this.isemailfail) {
+			if (this.userinfo.password.length > 0 && this.userinfo.account.length > 0) {
+				if (this.isaccountfail) {
 					uni.showToast({
-						title: '邮箱格式不正确',
+						title: '账号至少为3个字符',
 						duration: 1000,
 						icon: 'none'
 					});
+				}else {
 					if (this.ispasswordfail) {
 						uni.showToast({
 							title: '密码为3到16个字符',
 							duration: 1000,
 							icon: 'none'
 						});
+					}else {
+						uni.request({
+							data:this.userinfo,
+							method:'POST',
+							url:'https://gxnudsl.xyz/api/user/login',
+							success: (res) => {
+								uni.setStorage({
+									key:'userInfo',
+									data:res.data.res_info,
+									success: () => {
+										uni.showToast({
+											title:'登录成功',
+											icon:'none',
+											duration:1000
+										})
+										setTimeout(()=>{
+											if(res.data.res_info.isattestation == 0){
+												uni.showToast({
+													title:'系统检测到您还未认证身份，正在为您跳转...',
+													icon:'none',
+													duration:1000
+												})
+												setTimeout(()=>{
+													uni.redirectTo({
+														url:'../my/attestation/attestation'
+													})
+												},1000)
+											}else{
+												setTimeout(()=>{
+													let page = getCurrentPages()
+													let prevPage = page[page.length - 2]
+													prevPage.$vm.getData()
+													uni.navigateBack({})
+												},1000)
+											}
+										},1000)
+									}
+								})
+							}
+						})
 					}
-				} else {
-					console.log(this.userinfo);
 				}
 			} else {
 				uni.showToast({
-					title: '表单不能为空，请仔细填写',
+					title: '登录信息不能为空，请仔细填写',
 					duration: 1000,
 					icon: 'none'
 				});
