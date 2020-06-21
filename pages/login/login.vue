@@ -102,38 +102,46 @@ export default {
 							method:'POST',
 							url:'https://gxnudsl.xyz/api/user/login',
 							success: (res) => {
-								uni.setStorage({
-									key:'userInfo',
-									data:res.data.res_info,
-									success: () => {
-										uni.showToast({
-											title:'登录成功',
-											icon:'none',
-											duration:1000
-										})
-										setTimeout(()=>{
-											if(res.data.res_info.isattestation == 0){
-												uni.showToast({
-													title:'系统检测到您还未认证身份，正在为您跳转...',
-													icon:'none',
-													duration:1000
-												})
-												setTimeout(()=>{
-													uni.redirectTo({
-														url:'../my/attestation/attestation'
+								if(res.data.status_code == 200){
+									uni.setStorage({
+										key:'userInfo',
+										data:res.data.res_info,
+										success: () => {
+											uni.showToast({
+												title:'登录成功',
+												icon:'none',
+												duration:1000
+											})
+											setTimeout(()=>{
+												if(res.data.res_info.isattestation == 0){
+													uni.showToast({
+														title:'系统检测到您还未认证身份，正在为您跳转...',
+														icon:'none',
+														duration:1000
 													})
-												},1000)
-											}else{
-												setTimeout(()=>{
-													let page = getCurrentPages()
-													let prevPage = page[page.length - 2]
-													prevPage.$vm.getData()
-													uni.navigateBack({})
-												},1000)
-											}
-										},1000)
-									}
-								})
+													setTimeout(()=>{
+														uni.redirectTo({
+															url:'../my/attestation/attestation'
+														})
+													},1000)
+												}else{
+													setTimeout(()=>{
+														let page = getCurrentPages()
+														let prevPage = page[page.length - 2]
+														prevPage.$vm.getData()
+														uni.navigateBack({})
+													},1000)
+												}
+											},1000)
+										}
+									})
+								}else{
+									uni.showToast({
+										title:res.data.msg + '，请重新登陆',
+										icon:'none',
+										duration:1000
+									})
+								}
 							}
 						})
 					}

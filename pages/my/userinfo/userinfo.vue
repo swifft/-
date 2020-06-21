@@ -34,7 +34,9 @@
 		data() {
 			return {
 				phoneHeight:0,
-				userinfo:{}
+				userinfo:{},
+				avatarPath:'',
+				avatarUrl:''
 			};
 		},
 		onLoad() {
@@ -69,21 +71,51 @@
 				});
 			},
 			myUpload(res) {
-				this.userinfo.avatar = res.path;
-				this.userinfo['avatar'] = res.path;
-				uni.setStorage({
-					key:'userInfo',
-					data:this.userinfo,
-					success: () => {
-						uni.showToast({
-							title:'头像修改成功！',
-							icon:'none',
-							duration:1000
-						})
-						let page = getCurrentPages()
-						let prevPage = page[page.length - 2]
-						prevPage.$vm.getData()
-					},
+				this.avatarPath = res.path
+				uni.showLoading({
+				    title: '头像正在上传。。。',
+				});
+				uni.uploadFile({
+					url:'https://gxnudsl.xyz/api/user/avatarUpload',
+					name: 'file',
+					filePath:this.avatarPath,
+					success:(res)=>{
+						if(res.statusCode == 200){
+							this.avatarUrl = JSON.parse(res.data).data.url
+							uni.getStorage({
+							    key: 'userInfo',
+							    success: (res) =>{
+							      this.id = res.data._id
+								  uni.request({
+								  	url:'https://gxnudsl.xyz/api/user/userInfoEdit',
+									method:'POST',
+									data:{
+										'id':res.data._id,
+										'avatar':this.avatarUrl
+									},
+									success: (res) => {
+										this.userinfo = res.data.res_info
+										uni.setStorage({
+											key:'userInfo',
+											data:this.userinfo,
+											success: () => {
+												uni.hideLoading();
+												uni.showToast({
+												    title: '头像修改成功！',
+													icon:'success',
+												    duration: 2000
+												});
+												let page = getCurrentPages()
+												let prevPage = page[page.length - 2]
+												prevPage.$vm.getData()
+											},
+										})
+									}
+								  })
+							    }
+							});
+						}
+					}
 				})
 			},
 			exit(){

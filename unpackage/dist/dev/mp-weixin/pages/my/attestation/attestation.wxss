@@ -1,6 +1,33 @@
 .box {
   background-color: #eeeeee;
 }
+.PublicTemplate {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.PublicTemplate .Icon {
+  width: 50px;
+  height: 50px;
+  padding: 10px 0;
+}
+.PublicTemplate .Icon image {
+  width: 100%;
+  height: 100%;
+}
+.PublicTemplate .desc {
+  padding-top: 20px;
+}
 .form-box {
   background-color: #ffffff;
   padding: 10px 30px;

@@ -75,7 +75,7 @@
 					  console.log(this.userinfo)
 				    },
 					fail: (err) => {
-						this.userinfo = []
+						this.userinfo = {}
 					}
 				});
 			},
@@ -85,15 +85,15 @@
 				})
 			},
 			gouserinfo(){
-				if(this.userinfo){
+				if(this.userinfo.isattestation == 2){
 					uni.navigateTo({
 						url:'userinfo/userinfo'
 					})
 				}else{
 					uni.showToast({
-					    title: '您还没有登录,请先登录',
+					    title: '身份认证中，限制访问',
 						icon:'none',
-					    duration: 2000
+					    duration: 1000
 					});
 				}
 			},
@@ -109,14 +109,30 @@
 				})
 			},
 			gowaitchecked(){
-				uni.navigateTo({
-					url:'WaitChecked/WaitChecked'
-				})
+				if(this.userinfo.isattestation == 2){
+					uni.navigateTo({
+						url:'WaitChecked/WaitChecked'
+					})
+				}else{
+					uni.showToast({
+					    title: '身份认证中，限制访问',
+						icon:'none',
+					    duration: 1000
+					});
+				}
 			},
 			gochecked(){
-				uni.navigateTo({
-					url:'Checked/Checked'
-				})
+				if(this.userinfo.isattestation == 2){
+					uni.navigateTo({
+						url:'Checked/Checked'
+					})
+				}else{
+					uni.showToast({
+					    title: '身份认证中，限制访问',
+						icon:'none',
+					    duration: 1000
+					});
+				}
 			}
 		}
 	}
