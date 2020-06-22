@@ -21,7 +21,7 @@
 						<view class="fail" v-show="ispasswordfail"><image src="../../static/public/fail.png" mode=""></image></view>
 					</view>
 				</view>
-				<view class="forgetword">忘记密码？</view>
+				<view class="forgetword" @tap="forgetPassword">忘记密码？</view>
 				<view class="btn-box"><view class="btn" @tap="login">登录</view></view>
 			</view>
 		</view>
@@ -81,6 +81,13 @@ export default {
 			}
 			this.userinfo.password = e.detail.value;
 		},
+		forgetPassword(){
+			uni.showToast({
+				title:'如需修改密码，请联系管理员',
+				icon:'none',
+				duration:1000
+			})
+		},
 		login() {
 			if (this.userinfo.password.length > 0 && this.userinfo.account.length > 0) {
 				if (this.isaccountfail) {
@@ -89,7 +96,7 @@ export default {
 						duration: 1000,
 						icon: 'none'
 					});
-				}else {
+				}else { 
 					if (this.ispasswordfail) {
 						uni.showToast({
 							title: '密码为3到16个字符',

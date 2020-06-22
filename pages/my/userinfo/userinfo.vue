@@ -19,9 +19,6 @@
 				<uni-list-item title="当前身份" :showArrow="false" :rightText="userinfo.role"></uni-list-item>
 			</uni-list>
 		</view>
-		<view class="btn">
-			<button type="warn" @tap="exit">退出登录</button>
-		</view>
 	</view>
 </template>
 
@@ -117,21 +114,6 @@
 						}
 					}
 				})
-			},
-			exit(){
-				uni.clearStorage();
-				uni.showToast({
-					title:"正在为您退出...",
-					icon:'none',
-					duration:1000
-				})
-				setTimeout(()=>{
-					let page = getCurrentPages()
-					let prevPage = page[page.length - 2]
-					prevPage.$vm.getData()
-					uni.navigateBack({
-					})
-				},1000)
 			}
 		}
 	}
@@ -142,13 +124,6 @@
 	background-color: #eeeeee;
 	.list{
 		
-	}
-}
-.btn{
-	margin-top: 100px;
-	button{
-		width: 60%;
-		margin: 0 auto; 
 	}
 }
 </style>

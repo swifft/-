@@ -68,4 +68,11 @@
   padding: 15px 0;
   background-color: #eeeeee;
 }
+.setting .btn {
+  padding-top: 10px;
+}
+.setting .btn button {
+  width: 60%;
+  margin: 0 auto;
+}
 

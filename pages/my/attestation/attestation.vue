@@ -165,11 +165,13 @@
 												uni.showToast({
 												    title: '信息提交成功',
 													icon:'success',
-												    duration: 2000
+												    duration: 1000
 												});
-												let page = getCurrentPages()
-												let prevPage = page[page.length - 2]
-												prevPage.$vm.getData()
+												setTimeout(()=>{
+													uni.reLaunch({
+														url:'../my'
+													})
+												},1000)
 											},
 										})
 									}

@@ -6,7 +6,7 @@
 				<view class="mask"> 
 					<view class="avatar">
 						<image :src="userinfo.avatar" v-if="userinfo.avatar"></image>
-						<view class="login" @tap="login" v-if="Object.keys(userinfo) == 0">
+						<view class="login" @tap="login" v-if="Object.keys(userinfo).length === 0">
 							登录/注册
 						</view>
 						<view class="login" v-else>
@@ -24,7 +24,11 @@
 				<uni-list-item title="待审核" showExtraIcon="true" :extra-icon="{color: '#D4237A',size: '22',type: 'circle-filled'}" @tap="gowaitchecked"></uni-list-item>
 				<uni-list-item title="已审核" showExtraIcon="true" :extra-icon="{color: '#D4237A',size: '22',type: 'checkbox-filled'}" @tap="gochecked"></uni-list-item>
 			</uni-list>
+			<view class="btn" v-if="Object.keys(userinfo).length != 0">
+				<button type="warn" @tap="exit">退出登录</button>
+			</view>
 		</view>
+		
 	</view>
 </template>
 
@@ -41,7 +45,7 @@
 			this.getHeight()
 		},
 		onLoad() {
-			uni.startPullDownRefresh();
+			uni.startPullDownRefresh()
 		},
 		mounted() { 
 			this.getData()
@@ -90,11 +94,19 @@
 						url:'userinfo/userinfo'
 					})
 				}else{
-					uni.showToast({
-					    title: '身份认证中，限制访问',
-						icon:'none',
-					    duration: 1000
-					});
+					if(Object.keys(this.userinfo).length === 0){
+						uni.showToast({
+						    title: '用户未登录，请先登录',
+							icon:'none',
+						    duration: 1000
+						});
+					}else{
+						uni.showToast({
+							title: '身份认证中，限制访问',
+							icon:'none',
+							duration: 1000
+						});
+					}
 				}
 			},
 			login(){
@@ -114,11 +126,19 @@
 						url:'WaitChecked/WaitChecked'
 					})
 				}else{
-					uni.showToast({
-					    title: '身份认证中，限制访问',
-						icon:'none',
-					    duration: 1000
-					});
+					if(Object.keys(this.userinfo).length === 0){
+						uni.showToast({
+						    title: '用户未登录，请先登录',
+							icon:'none',
+						    duration: 1000
+						});
+					}else{
+						uni.showToast({
+							title: '身份认证中，限制访问',
+							icon:'none',
+							duration: 1000
+						});
+					}
 				}
 			},
 			gochecked(){
@@ -127,12 +147,33 @@
 						url:'Checked/Checked'
 					})
 				}else{
-					uni.showToast({
-					    title: '身份认证中，限制访问',
-						icon:'none',
-					    duration: 1000
-					});
+					if(Object.keys(this.userinfo).length === 0){
+						uni.showToast({
+						    title: '用户未登录，请先登录',
+							icon:'none',
+						    duration: 1000
+						});
+					}else{
+						uni.showToast({
+							title: '身份认证中，限制访问',
+							icon:'none',
+							duration: 1000
+						});
+					}
 				}
+			},
+			exit(){
+				uni.clearStorage();
+				uni.showToast({
+					title:"正在为您退出...",
+					icon:'none',
+					duration:1000
+				})
+				setTimeout(()=>{
+					this.getData()
+					uni.navigateBack({
+					})
+				},1000)
 			}
 		}
 	}
@@ -209,5 +250,14 @@
 	.setting{
 		padding: 15px 0;
 		background-color: #eeeeee;
+		.btn{
+			padding-top: 10px;
+			button{
+				width: 60%;
+				margin: 0 auto; 
+			}
+		}
 	}
+	
+	
 </style>

@@ -1,11 +1,4 @@
 .userinfo {
   background-color: #eeeeee;
 }
-.btn {
-  margin-top: 100px;
-}
-.btn button {
-  width: 60%;
-  margin: 0 auto;
-}
 
