@@ -4,7 +4,7 @@ import router from './router'
 import './plugins/element.js'
 import moment from 'moment'
 import VCharts from 'v-charts'
-import axios from 'axios'
+import axios from './http'
 
 Vue.config.productionTip = false
 //时间转换

@@ -63,7 +63,16 @@
 				</view>
 			</view>
 		</template>
-		
+		<template v-if="userinfo.isattestation == 3">
+			<view :style="{height:phoneHeight + 'px'}" class="PublicTemplate">
+				<view class="Icon">
+					<image src="../../../static/my/attestationSuccess.png"></image>
+				</view>
+				<view class="desc">
+					身份认证失败
+				</view>
+			</view>
+		</template>
 	</view>
 	
 </template>
