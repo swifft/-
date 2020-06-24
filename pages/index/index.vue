@@ -10,92 +10,134 @@
 			<swiper class="swiper-box" style="background: #f2f2f2;" :style="{'height':swiperheight + 'px'}" :current="tabIndex"
 			 @change="tabChange">
 				<swiper-item>
-					<template v-if="show == 1">
-						<view class="one">
+					<template v-if="Object.keys(userinfo).length === 0">
+						<view class="topBox" :style="{'height':swiperheight + 'px'}">
+							<view class="icon">
+								<image src="../../static/index/error.png" mode=""></image>
+							</view>
 							<view class="title">
-								请 假 条
+								您还没有登录，请登录
 							</view>
-							<view class="main">
-								<view class="top">
-									<view>尊敬的</view>
-									<view>
-										<input type="text" />
-									</view>
-									<view>老师</view>
+							<view class="btn">
+								<button type="primary" size="mini" @tap="goLogin">去登陆</button>
+							</view>
+						</view>
+					</template>
+					<template v-if="userinfo.isattestation == 0">
+						<view class="topBox" :style="{'height':swiperheight + 'px'}">
+							<view class="icon">
+								<image src="../../static/index/error.png" mode=""></image>
+							</view>
+							<view class="title">
+								您还没有认证，请认证
+							</view>
+							<view class="btn">
+								<button type="primary" size="mini" @tap="goAttestation">去认证</button>
+							</view>
+						</view>
+					</template>
+					<template v-if="userinfo.isattestation == 1">
+						<view class="topBox" :style="{'height':swiperheight + 'px'}">
+							<view class="icon">
+								<image src="../../static/index/error.png" mode=""></image>
+							</view>
+							<view class="title">
+								认证审核中，请稍后再来访问
+							</view>
+						</view>
+					</template>
+					<template v-if="userinfo.isattestation == 2">
+						<template v-if="userinfo.role == '学生'">
+							<view class="one">
+								<view class="title">
+									请 假 条
 								</view>
-								<view class="center">
-									<view class="center_1">
-										<view>您好!我是计信学院</view>
+								<view class="main">
+									<view class="top">
+										<view>尊敬的</view>
 										<view>
 											<input type="text" />
 										</view>
-										<view>级</view>
-										<view>
-											<input type="text" />
-										</view>
-										<view>专业学生</view>
-										<view>
-											<input type="text" />
-										</view>
-										<view>，学号为</view>
-										<view>
-											<input type="text" />
-										</view>
-										<view>，因</view>
-										<view>
-											<input type="text" class="center_2" />
-										</view>
-										<view>原因需请假，时间为</view>
-										<view v-if="rangetime.length == 0" style="margin: 0 5px;"><button type="default" size="mini" @tap="chooseDate(1)">选择</button></view>
-										<view v-else @tap="chooseDate(1)">{{rangetime[0]}} 至 {{rangetime[1]}}</view>
-										<view>，去向地址为</view>
-										<view>
-											<input type="text" class="center_3" />
-										</view>
-										<view class="center_4">本人承诺请假期间安全责任自负，恳请批准!</view>
+										<view>老师</view>
 									</view>
-									<view class="center_5">
-										<view>
-											<view>本人联系方式: </view>
+									<view class="center">
+										<view class="center_1">
+											<view>您好!我是计信学院</view>
 											<view>
 												<input type="text" />
 											</view>
-										</view>
-										<view>
-											<view>去向联系方式: </view>
+											<view>级</view>
 											<view>
 												<input type="text" />
 											</view>
+											<view>专业学生 {{userinfo.name}}</view>
+											<view>，学号 {{userinfo.schoolnumber}}</view>
+											<view>，因</view>
+											<view>
+												<input type="text" class="center_2" />
+											</view>
+											<view>原因需请假，时间为</view>
+											<view v-if="rangetime.length == 0" style="margin: 0 5px;"><button type="default" size="mini" @tap="chooseDate(1)">选择</button></view>
+											<view v-else @tap="chooseDate(1)">{{rangetime[0]}} 至 {{rangetime[1]}}</view>
+											<view>，去向地址为</view>
+											<view>
+												<input type="text" class="center_3" />
+											</view>
+											<view class="center_4">本人承诺请假期间安全责任自负，恳请批准!</view>
 										</view>
-									</view>
-									<view class="center_6">
-										<view>请假人: </view>
-										<view>
-											<input type="text" />
+										<view class="center_5">
+											<view>
+												<view>本人联系方式: </view>
+												<view>
+													<input type="text" />
+												</view>
+											</view>
+											<view>
+												<view>去向联系方式: </view>
+												<view>
+													<input type="text" />
+												</view>
+											</view>
 										</view>
+										<view class="center_6">
+											<view>请假人： </view>
+											<view>
+												{{userinfo.name}}
+											</view>
+										</view>
+										<view class="center_7">
+											<view v-if="date == ''" style="margin: 0 5px;"><button type="default" size="mini" @tap="chooseDate(2)">请假日期选择</button></view>
+											<view v-else @tap="chooseDate(2)">{{date}}</view>
+										</view>
+										<mx-date-picker :show="showPicker" type="rangetime" :begin-text="'离校'" :end-text="'返校'" @confirm="onSelected"
+										 @cancel="onSelected" />
+										<mx-date-picker :show="showDate" type="date" @confirm="dateSelected" @cancel="dateSelected" />
 									</view>
-									<view class="center_7">
-										<view v-if="date == ''" style="margin: 0 5px;"><button type="default" size="mini" @tap="chooseDate(2)">请假日期选择</button></view>
-										<view v-else @tap="chooseDate(2)">{{date}}</view>
-									</view>
-									<mx-date-picker :show="showPicker" type="rangetime" :begin-text="'离校'" :end-text="'返校'" @confirm="onSelected"
-									 @cancel="onSelected" />
-									<mx-date-picker :show="showDate" type="date" @confirm="dateSelected" @cancel="dateSelected" />
 								</view>
 							</view>
+							<view class="footer">
+								<button type="default" size="mini">确认提交</button>
+							</view>
+						</template>
+						<template v-if="userinfo.role == '老师'">
+							老师端
+						</template>
+						<template v-if="userinfo.role == '教务处'">
+							教务处端
+						</template>
+					</template>
+					<template v-if="userinfo.isattestation == 3">
+						<view class="topBox" :style="{'height':swiperheight + 'px'}">
+							<view class="icon">
+								<image src="../../static/index/error.png" mode=""></image>
+							</view>
+							<view class="title">
+								身份认证失败，请重新认证
+							</view>
+							<view class="btn">
+								<button type="primary" size="mini" @tap="goAttestation">去认证</button>
+							</view>
 						</view>
-						<view class="footer">
-							<button type="default" size="mini">确认提交</button>
-						</view>
-					</template>
-					<template v-if="show == 2">
-						老师端
-					</template>
-					<template v-if="show == 3">
-						辅导员端
-					</template>
-					<template v-if="show == 4">
-						教务处端
 					</template>
 				</swiper-item>
 				<swiper-item>
@@ -177,11 +219,27 @@
 		components: {
 			MxDatePicker
 		},
+		mounted() {
+			uni.startPullDownRefresh()
+		},
+		onPullDownRefresh() {
+			setTimeout(() =>{
+				this.getData();
+				uni.stopPullDownRefresh();
+			},500);	 
+			setTimeout(() =>{
+				uni.showToast({
+				    title: '已更新至最新数据啦',
+					icon:'none',
+				    duration: 2000
+				});
+			}, 1100);
+		},
 		data() {
 			return {
 				swiperheight: 500,
 				tabIndex: 0,
-				show: 1,
+				show: 0,
 				showPicker: false,
 				showDate: false,
 				date: '',
@@ -192,7 +250,8 @@
 				candidates_1:['一节','二节','三节','四节','五节','上午加下午','上午加晚上','下午加晚上','一天'],
 				classtime:'',
 				classData:['理1-202','理1-201','理1-302','理1-401','理1-207','理1-405',],
-				isclassResult:false
+				isclassResult:false,
+				userinfo:{}
 			}
 		},
 		onLoad() {
@@ -204,6 +263,39 @@
 			});
 		},
 		methods: {
+			getData(){
+				uni.getStorage({
+				    key: 'userInfo',
+				    success: (res) =>{
+						if(res.data == null){
+							this.userinfo = {};
+						}else{
+							this.userinfo = res.data;
+							uni.request({
+								data:{
+									'id':this.userinfo._id
+								},
+								method:'POST',
+								url:'https://gxnudsl.xyz/api/user/getUserInfoById',
+								success: (res) => {
+									if(res.data.status_code == 200){
+										this.userinfo = res.data.res_info;
+										uni.setStorage({
+											key:'userInfo',
+											data:this.userinfo
+										})
+									}else{
+										this.userinfo = {}
+									}
+								}
+							})
+						}
+				    },
+					fail: (err) => {
+						this.userinfo = {};
+					}
+				});
+			},
 			tabtap(index) {
 				this.tabIndex = index;
 			},
@@ -240,6 +332,16 @@
 			},
 			lookup(){
 				this.isclassResult = true
+			},
+			goLogin(){
+				uni.navigateTo({
+					url:'../login/login'
+				})
+			},
+			goAttestation(){
+				uni.navigateTo({
+					url:'../my/attestation/attestation'
+				})
 			}
 		}
 	}
@@ -253,6 +355,28 @@
 	
 	.uni-combox__selector{
 		z-index: 999!important;
+	}
+	
+	.topBox{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		.icon{
+			width: 50px;
+			height: 50px;
+			padding: 10px 0;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.title{
+			padding-top: 20px;
+		}
+		.btn{
+			padding-top: 30px;
+		}
 	}
 
 	.one {

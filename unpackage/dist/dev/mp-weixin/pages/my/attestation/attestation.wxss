@@ -28,6 +28,13 @@
 .PublicTemplate .desc {
   padding-top: 20px;
 }
+.PublicTemplate .text {
+  padding-top: 30px;
+  color: #fe6c6f;
+}
+.PublicTemplate .attestationAgain {
+  padding-top: 20px;
+}
 .form-box {
   background-color: #ffffff;
   padding: 10px 30px;

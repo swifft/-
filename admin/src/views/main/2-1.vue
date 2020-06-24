@@ -5,12 +5,13 @@
         <el-breadcrumb-item>
           <a href="home">首页</a>
         </el-breadcrumb-item>
-        <el-breadcrumb-item>请假审核</el-breadcrumb-item>
+        <el-breadcrumb-item>身份审核</el-breadcrumb-item>
       </el-breadcrumb>
       <el-table :data="tableData" stripe style="width: 100%;margin-top: 20px">
         <el-table-column type="index" :index="indexMethod" label="序号" width="100px"></el-table-column>
-        <el-table-column prop="attestation[0]" label="姓名"></el-table-column>
-        <el-table-column prop="attestation[1]" label="学号"></el-table-column>
+        <el-table-column prop="nickname" label="昵称"></el-table-column>
+        <el-table-column prop="attestation[0]" label="认证姓名"></el-table-column>
+        <el-table-column prop="schoolnumber" label="认证学号"></el-table-column>
         <el-table-column prop="role" label="身份"></el-table-column>
         <el-table-column label="状态">
           <template slot-scope="scope">
@@ -34,7 +35,12 @@
               :src="scope.row.attestation[2]"
               style="width: 100px; height: 100px;cursor: pointer;"
               @click="preview(scope.row.attestation[2])"
-            ></el-image>
+            >
+              <div slot="placeholder" style="text-align:center;padding-top:45px;color: rgb(64, 158, 255)">
+                <i class="el-icon-loading"></i>
+                加载中
+              </div>
+            </el-image>
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -59,21 +65,16 @@
     <el-dialog title="信息矫正" :visible.sync="dialogFormVisible" :center="true" width="30%">
       <el-form :model="form">
         <el-form-item label="性别" label-width="150px">
-          <el-select v-model="form.sex" placeholder="请选择性别">
+          <el-select v-model="form.sex">
             <el-option label="男" value="男"></el-option>
             <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="学号" label-width="150px">
-          <el-input
-            v-model="form.schoolnumber"
-            placeholder="请输入学号"
-            autocomplete="off"
-            style="width:217px"
-          ></el-input>
+        <el-form-item label="姓名" label-width="150px">
+          <el-input v-model="form.name" autocomplete="off" style="width: 217px"></el-input>
         </el-form-item>
         <el-form-item label="学院" label-width="150px">
-          <el-select v-model="form.college" placeholder="请选择性别">
+          <el-select v-model="form.college" placeholder="请选择学院">
             <el-option label="文学院 /新闻与传播学院" value="文学院 /新闻与传播学院"></el-option>
             <el-option label="法学院" value="法学院"></el-option>
             <el-option label="教育学部" value="教育学部"></el-option>
@@ -105,6 +106,15 @@
         <el-button @click="dialogFormVisible = false">取 消</el-button>
       </div>
     </el-dialog>
+    <el-dialog title="请填写原因" :visible.sync="failDialog" :center="true" width="30%">
+      <el-form :model="failForm">
+        <el-input v-model="failForm.attestationFailInfo" type="textarea" placeholder="请输入内容" maxlength="50" show-word-limit></el-input>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="sumbitfailInfo">确 定</el-button>
+        <el-button @click="failDialog = false">取 消</el-button>
+      </div>
+    </el-dialog>
     <div class="preview" v-show="ispreview">
       <img :src="previewSrc" />
       <div class="close" @click="previewClose">
@@ -123,7 +133,9 @@ export default {
       ispreview: false,
       dialogFormVisible: false,
       dataIndex: 0,
-      form: {}
+      form: {},
+      failForm:{},
+      failDialog:false
     };
   },
   mounted() {
@@ -137,7 +149,6 @@ export default {
             element.attestation = element.attestation.split("&");
           });
           this.tableData = res.data.res_info;
-          console.log(this.tableData);
         }
       });
     },
@@ -159,16 +170,8 @@ export default {
     },
     fail(id, index) {
       this.dataIndex = index;
-      this.form = this.tableData[index];
-      this.form["isattestation"] = 3;
-      this.$axios
-        .post("https://gxnudsl.xyz/api/user/userEdit", this.form)
-        .then(res => {
-          if (res.data.status_code == 200) {
-            this.$message.success("信息更新成功，正在为您重新加载。。。");
-            this.getData();
-          }
-        });
+      this.failForm = this.tableData[index];
+      this.failDialog = true;
     },
     sumbitInfo() {
       this.dialogFormVisible = false;
@@ -177,8 +180,28 @@ export default {
         .post("https://gxnudsl.xyz/api/user/userEdit", this.form)
         .then(res => {
           if (res.data.status_code == 200) {
-            this.$message.success("信息更新成功，正在为您重新加载。。。");
-            this.getData();
+            this.$notify({
+              title: '成功',
+              message: '信息更新成功',
+              type: 'success'
+            });
+            this.getData()
+          }
+        });
+    },
+    sumbitfailInfo(){
+      this.failDialog = false;
+      this.failForm["isattestation"] = 3;
+      this.$axios
+        .post("https://gxnudsl.xyz/api/user/attestationFailInfo", this.failForm)
+        .then(res => {
+          if (res.data.status_code == 200) {
+            this.$notify({
+              title: '成功',
+              message: '信息更新成功',
+              type: 'success'
+            });
+            this.getData()
           }
         });
     }

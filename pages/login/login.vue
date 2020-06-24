@@ -8,7 +8,7 @@
 				<view class="public">
 					<view class="form-title">账号</view>
 					<view class="form-input">
-						<input type="text" placeholder="请输入用户名/邮箱" placeholder-style="color:rgba(244, 244, 244, 0.4)" @input="getaccount" />
+						<input type="text" placeholder="请输入昵称/学号/教职工号" placeholder-style="color:rgba(244, 244, 244, 0.4)" @input="getaccount" />
 						<view class="success" v-show="isaccountsuccess"><image src="../../static/public/success.png" mode=""></image></view>
 						<view class="fail" v-show="isaccountfail"><image src="../../static/public/fail.png" mode=""></image></view>
 					</view>
@@ -109,6 +109,7 @@ export default {
 							method:'POST',
 							url:'https://gxnudsl.xyz/api/user/login',
 							success: (res) => {
+								console.log(res)
 								if(res.data.status_code == 200){
 									uni.setStorage({
 										key:'userInfo',

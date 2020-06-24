@@ -66,10 +66,16 @@
 		<template v-if="userinfo.isattestation == 3">
 			<view :style="{height:phoneHeight + 'px'}" class="PublicTemplate">
 				<view class="Icon">
-					<image src="../../../static/my/attestationSuccess.png"></image>
+					<image src="../../../static/my/attestationFail.png"></image>
 				</view>
 				<view class="desc">
 					身份认证失败
+				</view>
+				<view class="text">
+					tips:<strong>{{userinfo.attestationFailInfo}}</strong>
+				</view>
+				<view class="attestationAgain">
+					<button type="primary" size="mini" @tap="goAttestation">重新提交审核材料</button>
 				</view>
 			</view>
 		</template>
@@ -210,6 +216,9 @@
 					this.schoolnumber_check_success = false
 					this.schoolnumber_check_fail = true
 				}
+			},
+			goAttestation(){
+				this.userinfo.isattestation = 0
 			}
 		}
 	}
@@ -235,6 +244,13 @@
 		}
 	}
 	.desc{
+		padding-top: 20px;
+	}
+	.text{
+		padding-top: 30px;
+		color:#fe6c6f;
+	}
+	.attestationAgain{
 		padding-top: 20px;
 	}
 }

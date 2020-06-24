@@ -5,7 +5,7 @@
 			<view class="title"><view class="title-top">创建账户</view></view>
 			<view class="form">
 				<view class="public">
-					<view class="form-title">用户名</view>
+					<view class="form-title">昵称</view>
 					<view class="form-input">
 						<input type="text" placeholder="请输入用户名" placeholder-style="color:rgba(244, 244, 244, 0.4)" @input="getname" />
 						<view class="success" v-show="isnamesuccess"><image src="../../static/public/success.png" mode=""></image></view>
@@ -13,11 +13,11 @@
 					</view>
 				</view>
 				<view class="public">
-					<view class="form-title">邮箱</view>
+					<view class="form-title">学号/教职工号</view>
 					<view class="form-input">
-						<input type="text" placeholder="请输入邮箱" placeholder-style="color:rgba(244, 244, 244, 0.4)" @input="getemail" />
-						<view class="success" v-show="isemailsuccess"><image src="../../static/public/success.png" mode=""></image></view>
-						<view class="fail" v-show="isemailfail"><image src="../../static/public/fail.png" mode=""></image></view>
+						<input type="text" placeholder="请输入学号/教职工号" placeholder-style="color:rgba(244, 244, 244, 0.4)" @input="getschoolnumber" />
+						<view class="success" v-show="isschoolnumbersuccess"><image src="../../static/public/success.png" mode=""></image></view>
+						<view class="fail" v-show="isschoolnumberfail"><image src="../../static/public/fail.png" mode=""></image></view>
 					</view>
 				</view>
 				<view class="public">
@@ -71,18 +71,18 @@ export default {
 		return {
 			phoneHeight: '700px',
 			radio: false,
-			isemailsuccess: false,
-			isemailfail: false,
+			isschoolnumbersuccess: false,
+			isschoolnumberfail: false,
 			ispasswordsuccess: false,
 			ispasswordfail: false,
 			isnamesuccess: false,
 			isnamefail: false,
 			userinfo: {
-				name: '',
-				email: '',
+				nickname: '',
+				schoolnumber: '',
 				password: ''
 			},
-			roleType:['学生','老师','辅导员','教务处'],
+			roleType:['学生','老师'],
 			roleIndex:0
 		};
 	},
@@ -109,16 +109,16 @@ export default {
 		popupclose() {
 			this.$refs.popup.close();
 		},
-		getemail(e) {
-			const str = new RegExp(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/);
+		getschoolnumber(e) {
+			const str = new RegExp(/^\d{6,12}$/)
 			if (str.test(e.detail.value)) {
-				this.isemailfail = false;
-				this.isemailsuccess = true;
+				this.isschoolnumberfail = false;
+				this.isschoolnumbersuccess = true;
 			} else {
-				this.isemailfail = true;
-				this.isemailsuccess = false;
+				this.isschoolnumberfail = true;
+				this.isschoolnumbersuccess = false;
 			}
-			this.userinfo.email = e.detail.value;
+			this.userinfo.schoolnumber = e.detail.value;
 		},
 		getpassword(e) {
 			if (e.detail.value.length >= 3 && e.detail.value.length <= 16) {
@@ -138,17 +138,17 @@ export default {
 				this.isnamefail = true;
 				this.isnamesuccess = false;
 			}
-			this.userinfo.name = e.detail.value;
+			this.userinfo.nickname = e.detail.value;
 		},
 		// 身份选择
 		selectRole(e){
 			this.roleIndex = e.detail.value
 		},
 		register() {
-			if (this.userinfo.name.length > 0 && this.userinfo.password.length > 0 && this.userinfo.email.length > 0) {
-				if (this.isemailfail) {
+			if (this.userinfo.nickname.length > 0 && this.userinfo.password.length > 0 && this.userinfo.schoolnumber.length > 0) {
+				if (this.isschoolnumberfail) {
 					uni.showToast({
-						title: '邮箱格式不正确',
+						title: '学号/教职工号格式不正确',
 						duration: 1000,
 						icon: 'none'
 					});
@@ -162,7 +162,7 @@ export default {
 					} else {
 						if (this.isnamefail) {
 							uni.showToast({
-								title: '用户名为3到8个字符',
+								title: '昵称为3到8个字符',
 								duration: 1000,
 								icon: 'none'
 							});
@@ -180,25 +180,34 @@ export default {
 									method:'POST',
 									url:'https://gxnudsl.xyz/api/user/register',
 									success: (res) => {
-										uni.setStorage({
-											key:'userInfo',
-											data:res.data.res_info,
-											success: () => {
-												uni.showToast({
-													title:'欢迎您加入我们,正在为您跳转身份认证...',
-													icon:'none',
-													duration:1000
-												})
-												setTimeout(()=>{
-													let page = getCurrentPages()
-													let prevPage = page[page.length - 3]
-													prevPage.$vm.getData()
-													uni.redirectTo({
-														url:'../my/attestation/attestation'
+										console.log(res)
+										if(res.data.status_code == 200){
+											uni.setStorage({
+												key:'userInfo',
+												data:res.data.res_info,
+												success: () => {
+													uni.showToast({
+														title:'欢迎您加入我们,正在为您跳转身份认证...',
+														icon:'none',
+														duration:1000
 													})
-												},1000)
-											}
-										})
+													setTimeout(()=>{
+														let page = getCurrentPages()
+														let prevPage = page[page.length - 3]
+														prevPage.$vm.getData()
+														uni.redirectTo({
+															url:'../my/attestation/attestation'
+														})
+													},1000)
+												}
+											})
+										}else{
+											uni.showToast({
+												title:res.data.msg,
+												icon:'none',
+												duration:1000
+											})
+										}
 									}
 								})
 							}

@@ -16,7 +16,7 @@
 				<uni-list-item title="学院" :showArrow="false" :rightText="userinfo.college"></uni-list-item>
 				<uni-list-item title="身份认证" :showArrow="false" v-if="userinfo.isattestation == 0" rightText="未认证"></uni-list-item>
 				<uni-list-item title="身份认证" :showArrow="false" v-else rightText="已认证"></uni-list-item> 
-				<uni-list-item title="当前身份" :showArrow="false" :rightText="userinfo.role"></uni-list-item>
+				<uni-list-item title="身份类型" :showArrow="false" :rightText="userinfo.role"></uni-list-item>
 			</uni-list>
 		</view>
 	</view>

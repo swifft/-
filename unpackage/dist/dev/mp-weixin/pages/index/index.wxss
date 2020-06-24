@@ -5,6 +5,36 @@
 .uni-combox__selector {
   z-index: 999!important;
 }
+.topBox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.topBox .icon {
+  width: 50px;
+  height: 50px;
+  padding: 10px 0;
+}
+.topBox .icon image {
+  width: 100%;
+  height: 100%;
+}
+.topBox .title {
+  padding-top: 20px;
+}
+.topBox .btn {
+  padding-top: 30px;
+}
 .one {
   padding: 10px;
   background-color: #ffffff;

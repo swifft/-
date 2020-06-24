@@ -10,7 +10,7 @@
 							登录/注册
 						</view>
 						<view class="login" v-else>
-							{{userinfo.name}}
+							{{userinfo.nickname}}
 						</view>
 					</view>
 				</view>
@@ -44,17 +44,14 @@
 		onReady() {
 			this.getHeight()
 		},
-		onLoad() {
-			uni.startPullDownRefresh()
-		},
 		mounted() { 
-			this.getData()
+			uni.startPullDownRefresh()
 		},
 		onPullDownRefresh() {
 			setTimeout(() =>{
 				this.getData();
 				uni.stopPullDownRefresh();
-			}, 1000);	
+			},500);	 
 			setTimeout(() =>{
 				uni.showToast({
 				    title: '已更新至最新数据啦',
@@ -75,11 +72,32 @@
 				uni.getStorage({
 				    key: 'userInfo',
 				    success: (res) =>{
-				      this.userinfo = res.data
-					  console.log(this.userinfo)
+						if(res.data == null){
+							this.userinfo = {};
+						}else{
+							this.userinfo = res.data;
+							uni.request({
+								data:{
+									'id':this.userinfo._id
+								},
+								method:'POST',
+								url:'https://gxnudsl.xyz/api/user/getUserInfoById',
+								success: (res) => {
+									if(res.data.status_code == 200){
+										this.userinfo = res.data.res_info;
+										uni.setStorage({
+											key:'userInfo',
+											data:this.userinfo
+										})
+									}else{
+										this.userinfo = {}
+									}
+								}
+							})
+						}
 				    },
 					fail: (err) => {
-						this.userinfo = {}
+						this.userinfo = {};
 					}
 				});
 			},

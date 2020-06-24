@@ -41,11 +41,7 @@
             </template>
             <el-menu-item index="2-1">
               <i class="el-icon-s-data"></i>
-              <span>请假审核</span>
-            </el-menu-item>
-            <el-menu-item index="2-2">
-              <i class="el-icon-document"></i>
-              <span>教室审核</span>
+              <span>身份审核</span>
             </el-menu-item>
           </el-submenu>
           <el-menu-item index="2-1-2">
@@ -73,6 +69,12 @@ export default {
   methods: {
     getItem(e) {
       console.log(e);
+      if (e == 1){
+        this.$message.error('该功能暂未开放,请联系开发者');
+      }
+      if (e == 2){
+        this.$message.error('该功能暂未开放，请联系开发者');
+      }
     },
     changeicon() {
       setTimeout(() => {
@@ -90,15 +92,23 @@ export default {
 @keyframes animate {
   0% {
     background-position: 0%; /*修改背景定位，实现渐变色炫光*/
-    opacity: 0.5; /*透明度*/
   }
   50% {
     background-position: 100%;
-    opacity: 1; /*透明度*/
   }
   100% {
     background-position: 0%;
-    opacity: 0.5; /*透明度*/
+  }
+}
+@keyframes animate_1 {
+  0% {
+    background-position: 0%; /*修改背景定位，实现渐变色炫光*/
+  }
+  80% {
+    background-position: 70%;
+  }
+  100% {
+    background-position: 100%;
   }
 }
 .index {
@@ -121,7 +131,7 @@ export default {
     #03a9f4
   );
   background-size: 400%;
-  animation: animate 10s ease-in-out infinite alternate;
+  animation: animate 7s ease-in-out infinite alternate;
   padding: 0 50px;
   display: flex;
   justify-content: space-between;
@@ -154,6 +164,19 @@ export default {
   .main {
     flex: 1;
     padding: 20px 50px;
+    background: linear-gradient(
+      90deg,
+      #a29bfe,
+      #6c5ce7,
+      #fd79a8,
+      #e84393,
+      #e84393,
+      #fd79a8,
+      #6c5ce7,
+      #a29bfe
+    );
+    background-size: 400%;
+    animation: animate_1 7s ease-in-out infinite alternate;
   }
 }
 </style>
