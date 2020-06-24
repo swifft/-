@@ -1,4 +1,4 @@
-# admin
+# 项目后台管理系统，采用vue+element框架搭建
 
 ## Project setup
 ```
