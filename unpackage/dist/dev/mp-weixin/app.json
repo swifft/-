@@ -9,7 +9,10 @@
     "pages/register/register",
     "pages/my/attestation/attestation",
     "pages/my/WaitChecked/WaitChecked",
-    "pages/my/Checked/Checked"
+    "pages/my/Checked/Checked",
+    "pages/my/WaitChecked/progress/progress",
+    "pages/index/viewDetail/viewDetail",
+    "pages/my/Checked/progress/progress"
   ],
   "subPackages": [],
   "window": {
@@ -44,6 +47,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap69.json"
+  "usingComponents": {}
 }

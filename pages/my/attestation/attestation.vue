@@ -72,7 +72,7 @@
 					身份认证失败
 				</view>
 				<view class="text">
-					tips:<strong>{{userinfo.attestationFailInfo}}</strong>
+					tips: {{userinfo.attestationFailInfo}}
 				</view>
 				<view class="attestationAgain">
 					<button type="primary" size="mini" @tap="goAttestation">重新提交审核材料</button>

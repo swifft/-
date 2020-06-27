@@ -82,7 +82,7 @@ export default {
 				schoolnumber: '',
 				password: ''
 			},
-			roleType:['学生','老师'],
+			roleType:['学生','辅导员'],
 			roleIndex:0
 		};
 	},

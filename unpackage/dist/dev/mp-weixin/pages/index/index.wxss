@@ -3,7 +3,7 @@
   margin: 0 70rpx;
 }
 .uni-combox__selector {
-  z-index: 999!important;
+  z-index: 999 !important;
 }
 .topBox {
   display: -webkit-box;
@@ -34,6 +34,23 @@
 }
 .topBox .btn {
   padding-top: 30px;
+}
+.box {
+  width: 80%;
+  padding-top: 10px;
+  margin: 0 auto;
+}
+.box .title {
+  font-size: 20px;
+  font-family: "楷体";
+  font-weight: bold;
+  margin: 10px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
 }
 .one {
   padding: 10px;
@@ -143,6 +160,31 @@
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
+}
+.leave_success {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.leave_success view:nth-child(1) {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+}
+.leave_success view:nth-child(1) image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }
 .classMoudel {
   background-color: #ffffff;

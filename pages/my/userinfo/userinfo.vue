@@ -12,8 +12,9 @@
 				</uni-list-item>
 				<uni-list-item title="姓名" :showArrow="false" :rightText="userinfo.name"></uni-list-item>
 				<uni-list-item title="性别" :showArrow="false" :rightText="userinfo.sex"></uni-list-item>
-				<uni-list-item title="学号" :showArrow="false" :rightText="userinfo.schoolnumber"></uni-list-item>
-				<uni-list-item title="学院" :showArrow="false" :rightText="userinfo.college"></uni-list-item>
+				<uni-list-item title="学号" :showArrow="false" :rightText="userinfo.schoolnumber" v-if="userinfo.role == '学生'"></uni-list-item>
+				<uni-list-item title="职工号" :showArrow="false" :rightText="userinfo.schoolnumber" v-if="userinfo.role == '老师'"></uni-list-item>
+				<uni-list-item title="所属学院" :showArrow="false" :rightText="userinfo.college"></uni-list-item>
 				<uni-list-item title="身份认证" :showArrow="false" v-if="userinfo.isattestation == 0" rightText="未认证"></uni-list-item>
 				<uni-list-item title="身份认证" :showArrow="false" v-else rightText="已认证"></uni-list-item> 
 				<uni-list-item title="身份类型" :showArrow="false" :rightText="userinfo.role"></uni-list-item>

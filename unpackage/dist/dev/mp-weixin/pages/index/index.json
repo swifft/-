@@ -4,6 +4,8 @@
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": true,
   "usingComponents": {
+    "uni-list": "/components/uni-list/uni-list",
+    "uni-list-item": "/components/uni-list-item/uni-list-item",
     "uni-combox": "/components/uni-combox/uni-combox",
     "mx-date-picker": "/components/mx-datepicker/mx-datepicker"
   }

@@ -73,7 +73,31 @@
 			"navigationBarBackgroundColor": "#eeeeee",
 			"navigationBarTextStyle": "black"
 		}
-	}],
+	}    ,{
+            "path" : "pages/my/WaitChecked/progress/progress",
+            "style" : {
+				"navigationBarTitleText": "进度",
+				"navigationBarBackgroundColor": "#eeeeee",
+				"navigationBarTextStyle": "black"
+			}
+        }
+        ,{
+            "path" : "pages/index/viewDetail/viewDetail",
+            "style" : {
+				"navigationBarTitleText": "请假详情",
+				"navigationBarBackgroundColor": "#eeeeee",
+				"navigationBarTextStyle": "black"
+			}
+        }
+        ,{
+            "path" : "pages/my/Checked/progress/progress",
+            "style" : {
+				"navigationBarTitleText": "进度",
+				"navigationBarBackgroundColor": "#eeeeee",
+				"navigationBarTextStyle": "black"
+			}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "uni-app",
