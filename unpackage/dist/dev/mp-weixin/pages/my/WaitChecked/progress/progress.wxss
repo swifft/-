@@ -1,4 +1,33 @@
 .box {
   margin-top: 200px;
 }
+.class {
+  margin-top: 200px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.class .icon {
+  width: 100px;
+  height: 100px;
+}
+.class .icon image {
+  width: 100%;
+  height: 100%;
+}
+.class .text {
+  margin-top: 20px;
+  font-weight: 500;
+  font-family: "楷体";
+  font-size: 18px;
+}
 

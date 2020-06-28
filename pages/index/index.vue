@@ -48,7 +48,7 @@
 					</template>
 					<template v-if="userinfo.isattestation == 2">
 						<template v-if="userinfo.role == '学生'">
-							<template v-if="leaveData.key == false">
+							<template v-if="leaveData == null || leaveData.key == false">
 								<view class="one">
 									<view class="title">
 										请 假 条
@@ -69,7 +69,7 @@
 												</view>
 												<view>级</view>
 												<view>
-													<input type="text" />
+													<input type="text" v-model="major"/>
 												</view>
 												<view>专业学生 {{userinfo.name}}</view>
 												<view>，学号 {{userinfo.schoolnumber}}</view>
@@ -128,7 +128,7 @@
 						<template v-if="userinfo.role == '辅导员'">
 							<view class="box" v-if="teacherLeaveData.length > 0">
 								<uni-list v-for="(item,index) in teacherLeaveData" :key="index">
-									<uni-list-item title="请假条" :rightText="item.create_time | time" @tap="lookDetail(item._id)"></uni-list-item>
+									<uni-list-item title="请假条" :rightText="item.create_time | time" @tap="lookDetail(item._id,'leave')"></uni-list-item>
 								</uni-list>
 							</view>
 							<view :style="{'height':swiperheight + 'px'}" v-if="teacherLeaveData.length == 0">
@@ -137,8 +137,36 @@
 								</view>
 							</view>
 						</template>
+						<template v-if="userinfo.role == '副书记'">
+							<view class="box" v-if="teacherLeaveData.length > 0">
+								<uni-list v-for="(item,index) in teacherLeaveData" :key="index">
+									<view v-if="item.pass == '辅导员审核' && item.finish == '未完成'">
+									<uni-list-item title="请假条" :rightText="item.create_time | time" @tap="lookDetail(item._id,'leave')"></uni-list-item>
+									</view>
+								</uni-list>
+							</view>
+							<view :style="{'height':swiperheight + 'px'}" v-if="teacherLeaveData.length == 0">
+								<view style="height: 100%;width: 100%;">
+									<image src="../../static/my/DefaultPage_1.jpg" style="height: 100%;width: 100%;"></image>
+								</view>
+							</view>
+						</template>
+						<template v-if="userinfo.role == '书记'">
+							<view class="box" v-if="teacherLeaveData.length > 0">
+								<uni-list v-for="(item,index) in teacherLeaveData" :key="index">						
+									<uni-list-item title="请假条" :rightText="item.create_time | time" @tap="lookDetail(item._id,'leave')"></uni-list-item>
+								</uni-list>
+							</view>
+						</template>
 						<template v-if="userinfo.role == '教务处'">
-							教务处端
+							<view class="classPublic" :style="{'height':swiperheight + 'px'}">
+								<view class="icon">
+									<image src="../../static/index/forbid.png"></image>
+								</view>
+								<view class="text">
+									抱歉，您的身份暂不支持此类型服务
+								</view>
+							</view>
 						</template>
 					</template>
 					<template v-if="userinfo.isattestation == 3">
@@ -194,75 +222,125 @@
 					</template>
 					<template v-if="userinfo.isattestation == 2">
 						<template v-if="userinfo.role == '学生'">
-							<view class="classMoudel">
-								<view class="classList">
-									<view class="title">
-										性别:
-									</view>
-									<view class="input">
-										<input type="text" />
-									</view>
-								</view>
-								<view class="classList">
-									<view class="title">
-										学号:
-									</view>
-									<view class="input">
-										<input type="text" />
-									</view>
-								</view>
-								<view class="classList">
-									<view class="title">
-										电话:
-									</view>
-									<view class="input">
-										<input type="text" />
-									</view>
-								</view>
-								<view class="classList">
-									<view class="title">
-										用途:
-									</view>
-									<view class="input">
-										<input type="text" />
-									</view>
-								</view>
-								<view class="classList">
-									<view class="title">
-										是否使用多媒体:
-									</view>
-									<view class="radio">
-										<radio :checked="radio" @tap="isRadioCheked" />
-									</view>
-								</view>
-								<view class="lookup">
-									<view class="chooseClass">
-										<view class="chooseClass-1">
-											<uni-combox label="教室:" :candidates="candidates" placeholder="请选择教室区域" v-model="classposition"></uni-combox>
-										</view>
-										<view class="chooseClass-2">
-											<uni-combox label="节数:" :candidates="candidates_1" placeholder="请选择使用时间" v-model="classtime"></uni-combox>
+							<template v-if="classInfo == null || classInfo.key == false">
+								<view class="classMoudel">
+									<view class="classList">
+										<view class="title">
+											姓名: {{userinfo.name}}
 										</view>
 									</view>
-									<view class="lookupBtn" @tap="lookup">
-										查询
+									<view class="classList">
+										<view class="title">
+											性别: {{userinfo.sex}}
+										</view>
+									</view>
+									<view class="classList">
+										<view class="title">
+											学号: {{userinfo.schoolnumber}}
+										</view>
+									</view>
+									<view class="classList">
+										<view class="title">
+											电话:
+										</view>
+										<view class="input">
+											<input type="text" v-model="class_phone"/>
+										</view>
+									</view>
+									<view class="classList">
+										<view class="title">
+											用途:
+										</view>
+										<view class="input">
+											<input type="text" v-model="purpose"/>
+										</view>
+									</view>
+									<view class="classList">
+										<view class="title">
+											是否使用多媒体:
+										</view>
+										<view class="radio">
+											<radio :checked="radio" @tap="isRadioCheked" />
+										</view>
+									</view>
+									<view class="lookup">
+										<view class="chooseClass">
+											<view class="chooseClass-1">
+												<uni-combox label="教室:" :candidates="candidates" placeholder="请选择教室区域" v-model="classposition"></uni-combox>
+											</view>
+											<view class="chooseClass-2">
+												<uni-combox label="节数:" :candidates="candidates_1" placeholder="请选择使用时间" v-model="classtime"></uni-combox>
+											</view>
+										</view>
+										<view class="lookupBtn" @tap="lookup">
+											查询
+										</view>
+									</view>
+									<view class="classResult" v-if="isclassResult == true">
+										<view class="classResult_0">
+											为你查询到以下结果：
+										</view>
+										<scroll-view scroll-y="true" class="classResult-1">
+											<view v-for="(item, index) in classData" :key="index"><text>{{item}}</text></view>
+										</scroll-view>
 									</view>
 								</view>
-								<view class="classResult" v-if="isclassResult == true">
-									<view class="classResult_0">
-										为你查询到以下结果：
+								<view class="footer">
+									<button type="default" size="mini" @tap="class_submit">确认提交</button>
+								</view>
+							</template>
+							<template v-if="classInfo.key == true">
+								<view class="leave_success" :style="{'height':swiperheight + 'px'}">
+									<view>
+										<image src="../../static/index/success.png"></image>
 									</view>
-									<scroll-view scroll-y="true" class="classResult-1">
-										<view v-for="(item, index) in classData" :key="index"><text>{{item}}</text></view>
-									</scroll-view>
+									<view>
+										请假信息已提交，请在<span style="color: #007AFF;" @tap="goWaitChecked">个人中心</span>查看进度
+									</view>
+								</view>
+							</template>
+						</template>
+						<template v-if="userinfo.role == '辅导员'">
+							<view class="classPublic" :style="{'height':swiperheight + 'px'}">
+								<view class="icon">
+									<image src="../../static/index/forbid.png"></image>
+								</view>
+								<view class="text">
+									抱歉，您的身份暂不支持此类型服务
 								</view>
 							</view>
-							<view class="footer">
-								<button type="default" size="mini">确认提交</button>
+						</template>
+						<template v-if="userinfo.role == '副书记'">
+							<view class="classPublic" :style="{'height':swiperheight + 'px'}">
+								<view class="icon">
+									<image src="../../static/index/forbid.png"></image>
+								</view>
+								<view class="text">
+									抱歉，您的身份暂不支持此类型服务
+								</view>
+							</view>
+						</template>
+						<template v-if="userinfo.role == '书记'">
+							<view class="classPublic" :style="{'height':swiperheight + 'px'}">
+								<view class="icon">
+									<image src="../../static/index/forbid.png"></image>
+								</view>
+								<view class="text">
+									抱歉，您的身份暂不支持此类型服务
+								</view>
 							</view>
 						</template>
 						<template v-if="userinfo.role == '教务处'">
-							教务处端
+							<view class="box" v-if="classAllData.length > 0">
+								<uni-list v-for="(item,index) in classAllData" :key="index">						
+									<uni-list-item title="教室申请" :rightText="item.create_time | time" @tap="lookDetail(item._id,'class')"></uni-list-item>
+								</uni-list>
+							</view>
+							<view :style="{'height':swiperheight + 'px'}" v-if="classAllData.length == 0">
+								<view style="height: 100%;width: 100%;">
+									<image src="../../static/my/DefaultPage_1.jpg" style="height: 100%;width: 100%;"></image>
+								</view>
+							</view>
 						</template>
 					</template>
 					<template v-if="userinfo.isattestation == 3">
@@ -330,7 +408,11 @@
 				phone_number:'',
 				address:'',
 				leaveData:{},
-				teacherLeaveData:[]
+				teacherLeaveData:[],
+				class_phone:'',
+				classInfo:{},
+				purpose:'',
+				classAllData:[]
 			}
 		},
 		onLoad() {
@@ -363,8 +445,11 @@
 											key: 'userInfo',
 											data: this.userinfo
 										})
+										console.log(this.userinfo)
 										this.getLeaveData()
 										this.getTeacherLeave()
+										this.getClassData()
+										this.getAllClassDate()
 									} else {
 										this.userinfo = {}
 									}
@@ -426,7 +511,7 @@
 			},
 			leave_submit(){
 				const array = [];
-				array.push(this.grade,this.major,this.reason,this.address,this.phone_number,this.date)
+				array.push(this.superior_name,this.grade,this.major,this.reason,this.address,this.phone_number,this.date)
 				uni.request({
 					data:{
 						id:this.userinfo._id,
@@ -462,6 +547,7 @@
 					success: (res) => {
 						if(res.data.status_code == 200){
 							this.leaveData = res.data.res_info
+							// console.log(this.leaveData)
 						}
 					}
 				})
@@ -474,9 +560,20 @@
 					method:'POST',
 					url:'https://gxnudsl.xyz/api/leave/getBySuperior_name',
 					success: (res) => {
-						console.log(res)
 						if(res.data.status_code == 200){
 							this.teacherLeaveData = res.data.res_info
+							// console.log(this.teacherLeaveData)
+						}
+					}
+				})
+			},
+			getAllClassDate(){
+				uni.request({
+					url:'https://gxnudsl.xyz/api/class/getAll',
+					success: (res) => {
+						if(res.data.status_code == 200){
+							this.classAllData = res.data.res_info
+							console.log(this.classAllData)
 						}
 					}
 				})
@@ -486,9 +583,51 @@
 					url:'../my/WaitChecked/WaitChecked'
 				})
 			},
-			lookDetail(id){
+			lookDetail(id,type){
 				uni.navigateTo({
-					url:'viewDetail/viewDetail?id='+id
+					url:'viewDetail/viewDetail?id='+id + '&type=' + type
+				})
+			},
+			class_submit(){
+				const array = [];
+				array.push(this.userinfo.name,this.userinfo.sex,this.userinfo.schoolnumber,this.class_phone,this.classposition,this.classtime)
+				uni.request({
+					data:{
+						id:this.userinfo._id,
+						classInfo:array,
+						purpose:this.purpose,
+						isMedia:this.radio
+					},
+					method:'POST',
+					url:'https://gxnudsl.xyz/api/class/accept',
+					success: (res) => {
+						console.log(res)
+						if(res.data.status_code == 200){
+							uni.showToast({
+							    title: '教室信息已提交',
+								icon:'none',
+							    duration: 1000
+							});
+							setTimeout(()=>{
+								uni.startPullDownRefresh()
+							},1000)
+						}
+					}
+				})
+			},
+			getClassData(){
+				uni.request({
+					data:{
+						id:this.userinfo._id,
+					},
+					method:'POST',
+					url:'https://gxnudsl.xyz/api/class/getByUid',
+					success: (res) => {
+						if(res.data.status_code == 200){
+							this.classInfo = res.data.res_info
+							console.log(this.classInfo)
+						}
+					}
 				})
 			}
 		}
@@ -775,6 +914,27 @@
 					border-bottom: none;
 				}
 			}
+		}
+	}
+	
+	.classPublic{
+		background-color: #ffffff;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: center;
+		.icon{
+			width: 100px;
+			height: 100px;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.text{
+			font-weight: 500;
+			font-family: "楷体";
+			font-size: 18px;
 		}
 	}
 </style>

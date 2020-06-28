@@ -46,6 +46,12 @@
   -webkit-justify-content: flex-end;
           justify-content: flex-end;
 }
+.mainbox .classcontent {
+  padding: 10px;
+}
+.mainbox .classcontent view {
+  padding: 5px 10px;
+}
 .btn {
   margin: 20rpx;
   display: -webkit-box;

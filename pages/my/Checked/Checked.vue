@@ -11,7 +11,7 @@
 					请假条
 				</view>
 				<uni-list v-if="leaveData.finish == '完成'">
-					<uni-list-item title="请假条" :rightText="leaveData.create_time | time" @tap="goProgress"></uni-list-item>
+					<uni-list-item title="请假条" :rightText="leaveData.create_time | time" @tap="goProgress('leave')"></uni-list-item>
 				</uni-list>
 				<view v-if="leaveData.finish == '未完成'" class="tips">
 					<view>
@@ -24,9 +24,17 @@
 				<view class="title">
 					教室申请
 				</view>
-				<uni-list>
-					<uni-list-item title="教室申请" rightText="05/06 10:00"></uni-list-item>
+				<uni-list v-if="classInfo.finish == '完成'">
+					<uni-list-item title="教室申请" :rightText="classInfo.create_time | time" @tap="goProgress('class')"></uni-list-item>
 				</uni-list>
+				<view v-if="classInfo.finish == '未完成'" class="tips">
+					<view>
+						<image src="../../../static/my/nothing.png"></image>
+					</view>
+					<view>
+						暂时没有已审核的教室，去待审核看看吧
+					</view>
+				</view>
 			</view>
 		</template>
 	</view>
@@ -38,7 +46,8 @@
 			return {
 				phoneHeight:0,
 				userinfo:{},
-				leaveData:{}
+				leaveData:{},
+				classInfo:{}
 			};
 		},
 		onLoad() {
@@ -56,10 +65,6 @@
 				});
 			},
 			getLeaveData(){
-				uni.showLoading({
-					title:'加载中。。。',
-					mask:true
-				});
 				uni.getStorage({
 					key: 'userInfo',
 					success: (res) => {
@@ -77,7 +82,7 @@
 									if(res.data.status_code == 200){
 										this.leaveData = res.data.res_info
 										console.log(this.leaveData)
-										uni.hideLoading();
+										this.getClassData()
 									}
 								}
 							})
@@ -85,10 +90,25 @@
 					},
 				})
 			},
-			goProgress(){
+			getClassData(){
+				uni.request({
+					data:{
+						id:this.userinfo._id,
+					},
+					method:'POST',
+					url:'https://gxnudsl.xyz/api/class/getByUid',
+					success: (res) => {
+						if(res.data.status_code == 200){
+							this.classInfo = res.data.res_info
+							console.log(this.classInfo)
+						}
+					}
+				})
+			},
+			goProgress(e){
 				console.log(this.userinfo._id) 
 				uni.navigateTo({
-					url:'progress/progress?id='+this.userinfo._id
+					url:'progress/progress?id='+this.userinfo._id + '&type=' + e
 				})
 			}
 		}

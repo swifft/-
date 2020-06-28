@@ -298,4 +298,32 @@
 .classMoudel .classResult .classResult-1 view:last-child {
   border-bottom: none;
 }
+.classPublic {
+  background-color: #ffffff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.classPublic .icon {
+  width: 100px;
+  height: 100px;
+}
+.classPublic .icon image {
+  width: 100%;
+  height: 100%;
+}
+.classPublic .text {
+  font-weight: 500;
+  font-family: "楷体";
+  font-size: 18px;
+}
 

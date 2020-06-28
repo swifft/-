@@ -131,7 +131,7 @@ export default {
 			this.userinfo.password = e.detail.value;
 		},
 		getname(e) {
-			if (e.detail.value.length >= 3 && e.detail.value.length <= 8) {
+			if (e.detail.value.length >= 2 && e.detail.value.length <= 8) {
 				this.isnamefail = false;
 				this.isnamesuccess = true;
 			} else {

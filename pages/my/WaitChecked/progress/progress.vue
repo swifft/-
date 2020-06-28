@@ -1,20 +1,32 @@
 <template>
 	<view>
-		<view class="box">
-			<template v-if="show == 0" :style="{height:phoneHeight + 'px'}">
-				<uni-steps :options="[{title: '请假条提交'}, {title: '辅导员审核'}]" :active="index"></uni-steps>
-			</template>
-		</view>
-		<view class="box">
-			<template v-if="show == 1" :style="{height:phoneHeight + 'px'}" class="box">
-				<uni-steps :options="[{title: '请假条提交'}, {title: '辅导员审核'}, {title: '副书记审核'}]" :active="index"></uni-steps>
-			</template>
-		</view>
-		<view class="box">
-			<template v-if="show == 2" :style="{height:phoneHeight + 'px'}" class="box">
-				<uni-steps :options="[{title: '请假条提交'}, {title: '辅导员审核'}, {title: '副书记审核'}, {title: '书记审核'}]" :active="index"></uni-steps>
-			</template>
-		</view>
+		<template v-if="type == 'leave'">
+			<view class="box">
+				<template v-if="show == 0" :style="{height:phoneHeight + 'px'}">
+					<uni-steps :options="[{title: '请假条提交'}, {title: '辅导员审核'}]" :active="index"></uni-steps>
+				</template>
+			</view>
+			<view class="box">
+				<template v-if="show == 1" :style="{height:phoneHeight + 'px'}" class="box">
+					<uni-steps :options="[{title: '请假条提交'}, {title: '辅导员审核'}, {title: '副书记审核'}]" :active="index"></uni-steps>
+				</template>
+			</view>
+			<view class="box">
+				<template v-if="show == 2" :style="{height:phoneHeight + 'px'}" class="box">
+					<uni-steps :options="[{title: '请假条提交'}, {title: '辅导员审核'}, {title: '副书记审核'}, {title: '书记审核'}]" :active="index"></uni-steps>
+				</template>
+			</view>
+		</template>
+		<template v-if="type == 'class'">
+			<view class="class" >
+				<view class="icon">
+					<image src="../../../../static/my/classWaite.png"></image>
+				</view>
+				<view class="text">
+					审核中，请耐心等待。。。
+				</view>
+			</view>
+		</template>
 	</view>
 </template>
 
@@ -24,12 +36,16 @@
 		data() {
 			return {
 				Data: {},
-				leaveInfo: [],
+				leaveInfo: {},
+				classInfo:{},
 				index: 0,
-				show: 0
+				show: 0,
+				type:''
 			};
 		},
 		onLoad(option) {
+			this.type = option.type
+			console.log(this.type)
 			this.getData(option.id)
 			this.getHeight()
 		},
@@ -49,6 +65,21 @@
 							console.log(this.leaveInfo)
 							this.condition()
 							this.getActive()
+						}
+					}
+				})
+			},
+			getClassData(){
+				uni.request({
+					data:{
+						id:this.userinfo._id,
+					},
+					method:'POST',
+					url:'https://gxnudsl.xyz/api/class/getByUid',
+					success: (res) => {
+						if(res.data.status_code == 200){
+							this.classInfo = res.data.res_info
+							console.log(this.classInfo)
 						}
 					}
 				})
@@ -103,5 +134,27 @@
 <style lang="less">
 	.box {
 		margin-top: 200px;
+	}
+	
+	.class{
+		margin-top: 200px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: center;
+		.icon{
+			width: 100px;
+			height: 100px;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.text{
+			margin-top: 20px;
+			font-weight: 500;
+			font-family: "楷体";
+			font-size: 18px;
+		}
 	}
 </style>
