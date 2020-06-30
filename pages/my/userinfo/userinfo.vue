@@ -92,6 +92,7 @@
 										'avatar':this.avatarUrl
 									},
 									success: (res) => {
+										console.log(res)
 										this.userinfo = res.data.res_info
 										uni.setStorage({
 											key:'userInfo',
