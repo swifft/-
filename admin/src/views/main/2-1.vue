@@ -144,6 +144,7 @@ export default {
   methods: {
     getData() {
       this.$axios.get("https://gxnudsl.xyz/api/user/getUserInfo").then(res => {
+        console.log(res)
         if (res.data.status_code == 200) {
           res.data.res_info.forEach(element => {
             element.attestation = element.attestation.split("&");

@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "进度",
+  "navigationBarBackgroundColor": "#eeeeee",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "uni-steps": "/components/uni-steps/uni-steps"
+  }
+}

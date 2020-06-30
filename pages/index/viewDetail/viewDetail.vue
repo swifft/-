@@ -47,9 +47,8 @@
 			</view>
 			<uni-popup ref="failPassInfo">
 				<view class="box">
-					<view class="btn" v-if="leaveData.pass == '副书记审核'">
-						<button type="primary" size="mini" @click="pass">通过</button>
-						<button type="warn" size="mini" @click="openPopup">不通过</button>
+					<view class="title">
+						不通过理由
 					</view>
 					<view class="content">
 						<input type="text" placeholder="请输入不通过的理由" confirm-type="done" @confirm="failPass"/>
@@ -110,8 +109,11 @@
 		onLoad(option) {
 			this.id = option.id
 			this.type = option.type
-			this.getLeaveData()
-			this.getClassData()
+			if(this.type == 'class'){
+				this.getClassData()
+			}else{
+				this.getLeaveData()
+			}
 		},
 		methods: {
 			getLeaveData() {
@@ -348,7 +350,7 @@
 				console.log(this.failPassInfo)
 				this.$refs.failPassInfo.close()
 				if(this.failPassInfo.length > 0){
-					if(leaveData.pass == '请假条提交'){
+					if(this.leaveData.pass == '请假条提交'){
 						uni.request({
 							data: {
 								id: this.id,
@@ -372,7 +374,7 @@
 							}
 						})
 					}else{
-						if(leaveData.pass == '辅导员审核'){
+						if(this.leaveData.pass == '辅导员审核'){
 							uni.request({
 								data: {
 									id: this.id,
@@ -396,7 +398,7 @@
 								}
 							})
 						}else{
-							if(leaveData.pass == '副书记审核'){
+							if(this.leaveData.pass == '副书记审核'){
 								uni.request({
 									data: {
 										id: this.id,
@@ -452,7 +454,6 @@
 						duration:1000
 					})
 				}
-				
 			},
 			failPass_class(e){
 				this.failPassInfo_class = e.detail.value

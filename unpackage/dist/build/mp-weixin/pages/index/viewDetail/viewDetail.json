@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "请假详情",
+  "navigationBarBackgroundColor": "#eeeeee",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "uni-popup": "/components/uni-popup/uni-popup"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "个人信息",
+  "navigationBarBackgroundColor": "#eeeeee",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "uni-list": "/components/uni-list/uni-list",
+    "uni-list-item": "/components/uni-list-item/uni-list-item",
+    "avatar": "/components/yq-avatar/yq-avatar"
+  }
+}

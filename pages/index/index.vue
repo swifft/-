@@ -272,9 +272,9 @@
 												<uni-combox label="节数:" :candidates="candidates_1" placeholder="请选择使用时间" v-model="classtime"></uni-combox>
 											</view>
 										</view>
-										<view class="lookupBtn" @tap="lookup">
+										<!-- <view class="lookupBtn" @tap="lookup">
 											查询
-										</view>
+										</view> -->
 									</view>
 									<view class="classResult" v-if="isclassResult == true">
 										<view class="classResult_0">

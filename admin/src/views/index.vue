@@ -46,7 +46,7 @@
           </el-submenu>
           <el-menu-item index="2-1-2">
             <i class="el-icon-s-home"></i>
-            <span slot="title">数据视图</span>
+            <span slot="title">可视化展示</span>
           </el-menu-item>
         </el-menu>
       </div>

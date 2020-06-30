@@ -24,11 +24,18 @@
 				<uni-load-more :status="status" color="#3F85ED"></uni-load-more>
 			</view>
 		</scroll-view>
+		<uni-popup ref="popup" type="message">
+		    <uni-popup-message type="error" message="本页面正在开发中,所有数据均为模拟数据" duration="2000"></uni-popup-message>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
+	import uniPopupMessage from '@/components/uni-popup/uni-popup-message.vue'
 export default {
+	components: {
+		uniPopupMessage
+	},
 	data() {
 		return {
 			triggered: false,
@@ -75,6 +82,7 @@ export default {
 				icon:'none',
 			    duration: 2000
 			});
+			this.open()
 		}, 1100);
 	},
 	onReachBottom(){
@@ -97,7 +105,12 @@ export default {
 		
 	},
 	methods: {
-		
+		open(){
+			this.$refs.popup.open()
+		},
+		close(){
+			this.$refs.popup.close()
+		}
 	}
 };
 </script>
@@ -178,6 +191,33 @@ export default {
 		image {
 			width: 40rpx;
 			height: 40rpx;
+		}
+	}
+	
+	.popupBox{
+		width: 80%;
+		height: 80px;
+		background-color: #ffffff;
+		border-radius: 14px;
+		.top{
+			display: flex;
+			justify-content: center;
+			font-weight: 500;
+			font-family: "楷体";
+			padding: 10px 0;
+			font-size: 20px;
+		}
+		.title{
+			display: flex;
+			justify-content: center;
+			font-weight: 500;
+			padding: 10px 0;
+			font-size: 16px;
+		}
+		.btn{
+			display: flex;
+			justify-content: center;
+			padding: 10px;
 		}
 	}
 }

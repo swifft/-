@@ -97,6 +97,22 @@
 				"navigationBarTextStyle": "black"
 			}
         }
+        ,{
+            "path" : "pages/my/history/history",
+            "style" : {
+				"navigationBarTitleText": "历史记录",
+				"navigationBarBackgroundColor": "#eeeeee",
+				"navigationBarTextStyle": "black"
+			}
+        }
+        ,{
+            "path" : "pages/my/history/historyDetail/historyDetail",
+            "style" : {
+				"navigationBarTitleText": "历史详情",
+				"navigationBarBackgroundColor": "#eeeeee",
+				"navigationBarTextStyle": "black"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

@@ -12,7 +12,9 @@
     "pages/my/Checked/Checked",
     "pages/my/WaitChecked/progress/progress",
     "pages/index/viewDetail/viewDetail",
-    "pages/my/Checked/progress/progress"
+    "pages/my/Checked/progress/progress",
+    "pages/my/history/history",
+    "pages/my/history/historyDetail/historyDetail"
   ],
   "subPackages": [],
   "window": {
@@ -48,5 +50,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap18.json"
+  "sitemapLocation": "sitemap5.json"
 }

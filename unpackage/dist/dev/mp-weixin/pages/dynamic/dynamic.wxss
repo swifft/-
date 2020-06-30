@@ -80,4 +80,42 @@
   width: 40rpx;
   height: 40rpx;
 }
+.list-box .popupBox {
+  width: 80%;
+  height: 80px;
+  background-color: #ffffff;
+  border-radius: 14px;
+}
+.list-box .popupBox .top {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  font-weight: 500;
+  font-family: "楷体";
+  padding: 10px 0;
+  font-size: 20px;
+}
+.list-box .popupBox .title {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  font-weight: 500;
+  padding: 10px 0;
+  font-size: 16px;
+}
+.list-box .popupBox .btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  padding: 10px;
+}
 
