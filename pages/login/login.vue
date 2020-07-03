@@ -62,7 +62,7 @@ export default {
 			});
 		},
 		getaccount(e) {
-			if (e.detail.value.length >= 3) {
+			if (e.detail.value.length >= 2) {
 				this.isaccountfail = false;
 				this.isaccountsuccess = true;
 			} else {

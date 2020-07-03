@@ -147,55 +147,69 @@
 				this.isshow = true
 				this.ishidden = false
 			},
-			submit(){
+			submit(){ 
 				// console.log(this.form,this.previewImg)
-				uni.showLoading({
-				    title: '正在提交审核。。。',
-				});
-				uni.uploadFile({
-					url:'https://gxnudsl.xyz/api/user/attestationUpload',
-					name: 'file',
-					filePath:this.previewImg,
-					success:(res)=>{
-						if(res.statusCode == 200){
-							this.ImgUrl = JSON.parse(res.data).data.url
-							uni.getStorage({
-							    key: 'userInfo',
-							    success: (res) =>{
-							      this.id = res.data._id
-								  uni.request({
-								  	url:'https://gxnudsl.xyz/api/user/attestationInfo',
-									method:'POST',
-									data:{
-										'id':res.data._id,
-										'attestation':this.form.name + '&' + this.form.schoolnumber + '&' + this.ImgUrl
-									},
-									success: (res) => {
-										this.userinfo = res.data.res_info
-										uni.setStorage({
-											key:'userInfo',
-											data:this.userinfo,
-											success: () => {
-												uni.hideLoading();
-												uni.showToast({
-												    title: '信息提交成功',
-													icon:'success',
-												    duration: 1000
-												});
-												setTimeout(()=>{
-													uni.reLaunch({
-														url:'../my'
-													})
-												},1000)
+				if(this.form.name != "" && this.form.schoolnumber != "" && this.previewImg != '../../../static/my/previewImg.png'){
+					if(this.schoolnumber_check_success == true && this.name_check_success ==true){
+						uni.showLoading({
+						    title: '正在提交审核。。。',
+						});
+						uni.uploadFile({
+							url:'https://gxnudsl.xyz/api/user/attestationUpload',
+							name: 'file',
+							filePath:this.previewImg,
+							success:(res)=>{
+								if(res.statusCode == 200){
+									this.ImgUrl = JSON.parse(res.data).data.url
+									uni.getStorage({
+									    key: 'userInfo',
+									    success: (res) =>{
+									      this.id = res.data._id
+										  uni.request({
+										  	url:'https://gxnudsl.xyz/api/user/attestationInfo',
+											method:'POST',
+											data:{
+												'id':res.data._id,
+												'attestation':this.form.name + '&' + this.form.schoolnumber + '&' + this.ImgUrl
 											},
-										})
-									}
-								  })
-							    }
-							});
-						}
+											success: (res) => {
+												this.userinfo = res.data.res_info
+												uni.setStorage({
+													key:'userInfo',
+													data:this.userinfo,
+													success: () => {
+														uni.hideLoading();
+														uni.showToast({
+														    title: '信息提交成功',
+															icon:'success',
+														    duration: 1000
+														});
+														setTimeout(()=>{
+															uni.reLaunch({
+																url:'../my'
+															})
+														},1000)
+													},
+												})
+											}
+										  })
+									    }
+									});
+								}
+							}
+						})
+					}else{
+						uni.showToast({
+							title:'请正确填写信息',
+							icon:'none'
+						})
 					}
-				})
+				}else{
+					uni.showToast({
+						title:'请完善信息',
+						icon:'none'
+					})
+				}
 			},
 			name_check(e){
 				const str = new RegExp(/^[\u4E00-\u9FA5]{2,6}$/)

@@ -93,14 +93,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
+  uniCombox: function() {
+    return __webpack_require__.e(/*! import() | components/uni-combox/uni-combox */ "components/uni-combox/uni-combox").then(__webpack_require__.bind(null, /*! @/components/uni-combox/uni-combox.vue */ 279))
+  },
   uniList: function() {
     return __webpack_require__.e(/*! import() | components/uni-list/uni-list */ "components/uni-list/uni-list").then(__webpack_require__.bind(null, /*! @/components/uni-list/uni-list.vue */ 265))
   },
   uniListItem: function() {
     return __webpack_require__.e(/*! import() | components/uni-list-item/uni-list-item */ "components/uni-list-item/uni-list-item").then(__webpack_require__.bind(null, /*! @/components/uni-list-item/uni-list-item.vue */ 272))
-  },
-  uniCombox: function() {
-    return __webpack_require__.e(/*! import() | components/uni-combox/uni-combox */ "components/uni-combox/uni-combox").then(__webpack_require__.bind(null, /*! @/components/uni-combox/uni-combox.vue */ 279))
   }
 }
 var render = function() {
@@ -559,6 +559,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 {
   components: {
     MxDatePicker: MxDatePicker },
@@ -586,7 +588,9 @@ __webpack_require__.r(__webpack_exports__);
       show: 0,
       showPicker: false,
       showDate: false,
+      showClassDate: false,
       date: '',
+      classDate: '',
       rangetime: [],
       radio: false,
       candidates: ['理科楼'],
@@ -607,7 +611,8 @@ __webpack_require__.r(__webpack_exports__);
       class_phone: '',
       classInfo: {},
       purpose: '',
-      classAllData: [] };
+      classAllData: [],
+      teacherName: [] };
 
   },
   onLoad: function onLoad() {var _this2 = this;
@@ -645,6 +650,8 @@ __webpack_require__.r(__webpack_exports__);
                   _this3.getTeacherLeave();
                   _this3.getClassData();
                   _this3.getAllClassDate();
+                  _this3.teacherName = [];
+                  _this3.getTeacherName();
                 } else {
                   _this3.userinfo = {};
                 }
@@ -654,6 +661,19 @@ __webpack_require__.r(__webpack_exports__);
         },
         fail: function fail(err) {
           _this3.userinfo = {};
+        } });
+
+    },
+    getTeacherName: function getTeacherName() {var _this4 = this;
+      uni.request({
+        url: 'https://gxnudsl.xyz/api/user/getTeacher',
+        success: function success(res) {
+          if (res.data.status_code == 200) {
+            res.data.res_info.forEach(function (item) {
+              _this4.teacherName.push(item.name);
+            });
+            console.log(_this4.teacherName);
+          }
         } });
 
     },
@@ -671,6 +691,9 @@ __webpack_require__.r(__webpack_exports__);
         case 2:
           this.showDate = true;
           break;
+        case 3:
+          this.showClassDate = true;
+          break;
         default:
           break;}
 
@@ -685,6 +708,12 @@ __webpack_require__.r(__webpack_exports__);
       this.showDate = false;
       if (e) {
         this.date = e.value;
+      }
+    },
+    classSelected: function classSelected(e) {
+      this.showClassDate = false;
+      if (e) {
+        this.classDate = e.value;
       }
     },
     isRadioCheked: function isRadioCheked() {
@@ -706,33 +735,46 @@ __webpack_require__.r(__webpack_exports__);
     },
     leave_submit: function leave_submit() {
       var array = [];
+      var k = 0;
       array.push(this.superior_name, this.grade, this.major, this.reason, this.address, this.phone_number, this.date);
-      uni.request({
-        data: {
-          id: this.userinfo._id,
-          leaveInfo: array,
-          superior_name: this.superior_name,
-          rangetime: this.rangetime,
-          pass: '请假条提交' },
+      array.forEach(function (item) {
+        if (Object.keys(item).length == 0) {
+          k++;
+        }
+      });
+      if (k == 0) {
+        uni.request({
+          data: {
+            id: this.userinfo._id,
+            leaveInfo: array,
+            superior_name: this.superior_name,
+            rangetime: this.rangetime,
+            pass: '请假条提交' },
 
-        method: 'POST',
-        url: 'https://gxnudsl.xyz/api/leave/accept',
-        success: function success(res) {
-          console.log(res);
-          if (res.data.status_code == 200) {
-            uni.showToast({
-              title: '请假信息已提交',
-              icon: 'none',
-              duration: 1000 });
+          method: 'POST',
+          url: 'https://gxnudsl.xyz/api/leave/accept',
+          success: function success(res) {
+            console.log(res);
+            if (res.data.status_code == 200) {
+              uni.showToast({
+                title: '请假信息已提交',
+                icon: 'none',
+                duration: 1000 });
 
-            setTimeout(function () {
-              uni.startPullDownRefresh();
-            }, 1000);
-          }
-        } });
+              setTimeout(function () {
+                uni.startPullDownRefresh();
+              }, 1000);
+            }
+          } });
 
+      } else {
+        uni.showToast({
+          title: '请完善信息',
+          icon: 'none' });
+
+      }
     },
-    getLeaveData: function getLeaveData() {var _this4 = this;
+    getLeaveData: function getLeaveData() {var _this5 = this;
       uni.request({
         data: {
           id: this.userinfo._id },
@@ -741,13 +783,13 @@ __webpack_require__.r(__webpack_exports__);
         url: 'https://gxnudsl.xyz/api/leave/getByUid',
         success: function success(res) {
           if (res.data.status_code == 200) {
-            _this4.leaveData = res.data.res_info;
+            _this5.leaveData = res.data.res_info;
             // console.log(this.leaveData)
           }
         } });
 
     },
-    getTeacherLeave: function getTeacherLeave() {var _this5 = this;
+    getTeacherLeave: function getTeacherLeave() {var _this6 = this;
       uni.request({
         data: {
           superior_name: this.userinfo.name },
@@ -756,19 +798,19 @@ __webpack_require__.r(__webpack_exports__);
         url: 'https://gxnudsl.xyz/api/leave/getBySuperior_name',
         success: function success(res) {
           if (res.data.status_code == 200) {
-            _this5.teacherLeaveData = res.data.res_info;
+            _this6.teacherLeaveData = res.data.res_info;
             // console.log(this.teacherLeaveData)
           }
         } });
 
     },
-    getAllClassDate: function getAllClassDate() {var _this6 = this;
+    getAllClassDate: function getAllClassDate() {var _this7 = this;
       uni.request({
         url: 'https://gxnudsl.xyz/api/class/getAll',
         success: function success(res) {
           if (res.data.status_code == 200) {
-            _this6.classAllData = res.data.res_info;
-            console.log(_this6.classAllData);
+            _this7.classAllData = res.data.res_info;
+            console.log(_this7.classAllData);
           }
         } });
 
@@ -785,32 +827,45 @@ __webpack_require__.r(__webpack_exports__);
     },
     class_submit: function class_submit() {
       var array = [];
-      array.push(this.userinfo.name, this.userinfo.sex, this.userinfo.schoolnumber, this.class_phone, this.classposition, this.classtime);
-      uni.request({
-        data: {
-          id: this.userinfo._id,
-          classInfo: array,
-          purpose: this.purpose,
-          isMedia: this.radio },
+      var k = 0;
+      array.push(this.userinfo.name, this.classDate, this.userinfo.schoolnumber, this.class_phone, this.classposition, this.classtime);
+      array.forEach(function (item) {
+        if (Object.keys(item).length == 0) {
+          k++;
+        }
+      });
+      if (k == 0) {
+        uni.request({
+          data: {
+            id: this.userinfo._id,
+            classInfo: array,
+            purpose: this.purpose,
+            isMedia: this.radio },
 
-        method: 'POST',
-        url: 'https://gxnudsl.xyz/api/class/accept',
-        success: function success(res) {
-          console.log(res);
-          if (res.data.status_code == 200) {
-            uni.showToast({
-              title: '教室信息已提交',
-              icon: 'none',
-              duration: 1000 });
+          method: 'POST',
+          url: 'https://gxnudsl.xyz/api/class/accept',
+          success: function success(res) {
+            console.log(res);
+            if (res.data.status_code == 200) {
+              uni.showToast({
+                title: '教室信息已提交',
+                icon: 'none',
+                duration: 1000 });
 
-            setTimeout(function () {
-              uni.startPullDownRefresh();
-            }, 1000);
-          }
-        } });
+              setTimeout(function () {
+                uni.startPullDownRefresh();
+              }, 1000);
+            }
+          } });
 
+      } else {
+        uni.showToast({
+          title: '请完善信息',
+          icon: 'none' });
+
+      }
     },
-    getClassData: function getClassData() {var _this7 = this;
+    getClassData: function getClassData() {var _this8 = this;
       uni.request({
         data: {
           id: this.userinfo._id },
@@ -819,8 +874,8 @@ __webpack_require__.r(__webpack_exports__);
         url: 'https://gxnudsl.xyz/api/class/getByUid',
         success: function success(res) {
           if (res.data.status_code == 200) {
-            _this7.classInfo = res.data.res_info;
-            console.log(_this7.classInfo);
+            _this8.classInfo = res.data.res_info;
+            console.log(_this8.classInfo);
           }
         } });
 

@@ -57,7 +57,7 @@
 										<view class="top">
 											<view>尊敬的</view>
 											<view>
-												<input type="text" placeholder="请填写全名" v-model="superior_name"/>
+												<uni-combox :candidates="teacherName" placeholder="请选择辅导员" v-model="superior_name"></uni-combox>
 											</view>
 											<view>老师</view>
 										</view>
@@ -230,9 +230,11 @@
 										</view>
 									</view>
 									<view class="classList">
-										<view class="title">
-											性别: {{userinfo.sex}}
+										<view>
+											<view v-if="classDate == ''" style="margin: 0 5px;"><button type="default" size="mini" @tap="chooseDate(3)">请假日期选择</button></view>
+											<view v-else @tap="chooseDate(3)">请假日期: {{classDate}}</view>
 										</view>
+										<mx-date-picker :show="showClassDate" type="date" @confirm="classSelected" @cancel="classSelected" />
 									</view>
 									<view class="classList">
 										<view class="title">
@@ -391,14 +393,16 @@
 				show: 0,
 				showPicker: false,
 				showDate: false,
+				showClassDate: false,
 				date: '',
+				classDate:'',
 				rangetime: [],
 				radio: false,
 				candidates: ['理科楼'],
 				classposition: '',
 				candidates_1: ['一节', '二节', '三节', '四节', '五节', '上午加下午', '上午加晚上', '下午加晚上', '一天'],
 				classtime: '',
-				classData: ['理1-202', '理1-201', '理1-302', '理1-401', '理1-207', '理1-405', ],
+				classData: ['理1-202', '理1-201', '理1-302', '理1-401', '理1-207', '理1-405'],
 				isclassResult: false,
 				userinfo: {},
 				superior_name:'',
@@ -412,7 +416,8 @@
 				class_phone:'',
 				classInfo:{},
 				purpose:'',
-				classAllData:[]
+				classAllData:[],
+				teacherName:[]
 			}
 		},
 		onLoad() {
@@ -450,6 +455,8 @@
 										this.getTeacherLeave()
 										this.getClassData()
 										this.getAllClassDate()
+										this.teacherName = []  
+										this.getTeacherName()
 									} else {
 										this.userinfo = {}
 									}
@@ -461,6 +468,19 @@
 						this.userinfo = {};
 					}
 				});
+			},
+			getTeacherName(){
+				uni.request({
+					url:'https://gxnudsl.xyz/api/user/getTeacher',
+					success: (res) => {
+						if (res.data.status_code == 200) {
+							res.data.res_info.forEach((item)=>{
+								this.teacherName.push(item.name)
+							})
+							console.log(this.teacherName)
+						}
+					}
+				})
 			},
 			tabtap(index) {
 				this.tabIndex = index;
@@ -476,6 +496,9 @@
 					case 2:
 						this.showDate = true;
 						break;
+					case 3:
+						this.showClassDate = true;
+						break;
 					default:
 						break;
 				}
@@ -490,6 +513,12 @@
 				this.showDate = false;
 				if (e) {
 					this.date = e.value
+				}
+			},
+			classSelected(e) {
+				this.showClassDate = false;
+				if (e) {
+					this.classDate = e.value
 				}
 			},
 			isRadioCheked() {
@@ -511,31 +540,44 @@
 			},
 			leave_submit(){
 				const array = [];
+				let k = 0;
 				array.push(this.superior_name,this.grade,this.major,this.reason,this.address,this.phone_number,this.date)
-				uni.request({
-					data:{
-						id:this.userinfo._id,
-						leaveInfo:array,
-						superior_name:this.superior_name,
-						rangetime:this.rangetime,
-						pass:'请假条提交'
-					},
-					method:'POST',
-					url:'https://gxnudsl.xyz/api/leave/accept',
-					success: (res) => {
-						console.log(res)
-						if(res.data.status_code == 200){
-							uni.showToast({
-							    title: '请假信息已提交',
-								icon:'none',
-							    duration: 1000
-							});
-							setTimeout(()=>{
-								uni.startPullDownRefresh()
-							},1000)
-						}
+				array.forEach((item)=>{
+					if(Object.keys(item).length == 0){
+						k++;
 					}
 				})
+				if(k == 0){
+					uni.request({
+						data:{
+							id:this.userinfo._id,
+							leaveInfo:array,
+							superior_name:this.superior_name,
+							rangetime:this.rangetime,
+							pass:'请假条提交'
+						},
+						method:'POST',
+						url:'https://gxnudsl.xyz/api/leave/accept',
+						success: (res) => {
+							console.log(res)
+							if(res.data.status_code == 200){
+								uni.showToast({
+								    title: '请假信息已提交',
+									icon:'none',
+								    duration: 1000
+								});
+								setTimeout(()=>{
+									uni.startPullDownRefresh()
+								},1000)
+							}
+						}
+					})
+				}else{
+					uni.showToast({
+						title:'请完善信息',
+						icon:'none'
+					});
+				}
 			},
 			getLeaveData(){
 				uni.request({
@@ -590,30 +632,43 @@
 			},
 			class_submit(){
 				const array = [];
-				array.push(this.userinfo.name,this.userinfo.sex,this.userinfo.schoolnumber,this.class_phone,this.classposition,this.classtime)
-				uni.request({
-					data:{
-						id:this.userinfo._id,
-						classInfo:array,
-						purpose:this.purpose,
-						isMedia:this.radio
-					},
-					method:'POST',
-					url:'https://gxnudsl.xyz/api/class/accept',
-					success: (res) => {
-						console.log(res)
-						if(res.data.status_code == 200){
-							uni.showToast({
-							    title: '教室信息已提交',
-								icon:'none',
-							    duration: 1000
-							});
-							setTimeout(()=>{
-								uni.startPullDownRefresh()
-							},1000)
-						}
+				let k = 0;
+				array.push(this.userinfo.name,this.classDate,this.userinfo.schoolnumber,this.class_phone,this.classposition,this.classtime);
+				array.forEach((item)=>{
+					if(Object.keys(item).length == 0){
+						k++;
 					}
 				})
+				if(k == 0){
+					uni.request({
+						data:{
+							id:this.userinfo._id,
+							classInfo:array,
+							purpose:this.purpose,
+							isMedia:this.radio
+						},
+						method:'POST',
+						url:'https://gxnudsl.xyz/api/class/accept',
+						success: (res) => {
+							console.log(res)
+							if(res.data.status_code == 200){
+								uni.showToast({
+								    title: '教室信息已提交',
+									icon:'none',
+								    duration: 1000
+								});
+								setTimeout(()=>{
+									uni.startPullDownRefresh()
+								},1000)
+							}
+						}
+					})
+				}else{
+					uni.showToast({
+						title:'请完善信息',
+						icon:'none'
+					});
+				}
 			},
 			getClassData(){
 				uni.request({
@@ -700,6 +755,7 @@
 		.main {
 			.top {
 				display: flex;
+				align-items: center;
 				font-size: 18px;
 				margin: 5px 0;
 
